@@ -2,116 +2,159 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#1a1a2e">
-<title>Deutsch B2 — Goethe Prep</title>
+<meta name="theme-color" content="#0f0f1a">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Deutsch B2</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#1a1a2e;--bg2:#16213e;--bg3:#0f3460;--accent:#e94560;--accent2:#f59e0b;--text:#eaeaea;--text2:#a0a0b0;--success:#10b981;--error:#ef4444;--card:#1e293b;--radius:16px;--shadow:0 4px 20px rgba(0,0,0,0.3)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:80px}
-.topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bg2);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05)}
-.topbar h1{font-size:18px;font-weight:700}
-.topbar .streak{font-size:14px;color:var(--accent2)}
-.navbar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--bg2);display:flex;justify-content:space-around;padding:8px 0 max(8px,env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,0.05)}
-.navbar button{background:none;border:none;color:var(--text2);font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:all 0.2s}
-.navbar button .icon{font-size:22px}
-.navbar button.active{color:var(--accent)}
-.page{display:none;padding:70px 16px 20px;min-height:100vh}
-.page.active{display:block;animation:fadeIn 0.2s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.card{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;border-radius:12px;border:none;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;gap:8px}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0f0f1a;--bg2:#1a1a2e;--bg3:#16213e;--accent:#e94560;--accent2:#f59e0b;--text:#f0f0f0;--text2:#8888a0;--success:#10b981;--error:#ef4444;--card:#1a1a2e;--radius:20px;--nav-h:68px}
+html,body{overscroll-behavior:none;overflow:hidden;height:100%;touch-action:manipulation}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);height:100%;user-select:none;-webkit-user-select:none;position:fixed;width:100%}
+/* App container */
+.app{height:100%;display:flex;flex-direction:column;overflow:hidden}
+/* Top bar */
+.topbar{padding:max(env(safe-area-inset-top),12px) 20px 12px;display:flex;align-items:center;justify-content:space-between;background:var(--bg);z-index:10;flex-shrink:0}
+.topbar h1{font-size:20px;font-weight:800;letter-spacing:-0.5px}
+.topbar .streak{font-size:15px;color:var(--accent2);font-weight:700}
+/* Pages */
+.pages{flex:1;position:relative;overflow:hidden}
+.page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:20px 20px 24px;opacity:0;transform:translateX(30px);transition:all 0.3s cubic-bezier(0.4,0,0.2,1);pointer-events:none;-webkit-overflow-scrolling:touch}
+.page.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.page.exit-left{opacity:0;transform:translateX(-30px)}
+/* Bottom nav */
+.navbar{flex-shrink:0;background:var(--bg2);display:flex;justify-content:space-around;align-items:center;padding:8px 8px max(env(safe-area-inset-bottom),8px);border-top:1px solid rgba(255,255,255,0.04);height:var(--nav-h)}
+.nav-btn{background:none;border:none;color:var(--text2);font-size:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px 12px;border-radius:16px;transition:all 0.2s;min-width:52px;position:relative}
+.nav-btn .icon{font-size:24px;transition:transform 0.2s}
+.nav-btn.active{color:var(--accent)}
+.nav-btn.active .icon{transform:scale(1.15)}
+.nav-btn.active::after{content:'';position:absolute;bottom:2px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+/* Cards */
+.card{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:14px;border:1px solid rgba(255,255,255,0.04)}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 28px;border-radius:14px;border:none;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.15s;gap:8px;min-height:48px;active:scale(0.96)}
+.btn:active{transform:scale(0.96);opacity:0.9}
 .btn-primary{background:var(--accent);color:white}
-.btn-primary:active{transform:scale(0.95);background:#d63050}
 .btn-success{background:var(--success);color:white}
-.btn-outline{background:transparent;border:2px solid var(--accent);color:var(--accent)}
-.btn-sm{padding:8px 16px;font-size:13px}
+.btn-outline{background:rgba(233,69,96,0.1);border:2px solid var(--accent);color:var(--accent)}
+.btn-sm{padding:10px 18px;font-size:14px;min-height:40px}
 .btn-block{width:100%}
-input,textarea,select{width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--text);font-size:15px;outline:none;transition:border 0.2s}
-input:focus,textarea:focus{border-color:var(--accent)}
-textarea{resize:vertical;min-height:120px;font-family:inherit}
-label{display:block;font-size:13px;color:var(--text2);margin-bottom:6px;font-weight:500}
-.form-group{margin-bottom:16px}
-.flashcard-container{perspective:1000px;width:100%;height:240px;margin:20px 0;cursor:pointer}
-.flashcard{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.5s;border-radius:var(--radius)}
+.btn-ghost{background:none;border:none;color:var(--text2);padding:10px}
+/* Inputs */
+input,textarea,select{width:100%;padding:14px 18px;border-radius:14px;border:2px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.04);color:var(--text);font-size:16px;outline:none;transition:border 0.2s;min-height:48px}
+input:focus,textarea:focus{border-color:var(--accent);background:rgba(233,69,96,0.03)}
+textarea{resize:none;min-height:140px;font-family:inherit;line-height:1.5}
+label{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.form-group{margin-bottom:18px}
+/* Flashcard */
+.flashcard-container{perspective:1200px;width:100%;height:260px;margin:16px 0;touch-action:pan-y}
+.flashcard{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);border-radius:var(--radius)}
 .flashcard.flipped{transform:rotateY(180deg)}
-.flashcard .front,.flashcard .back{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;backface-visibility:hidden;border-radius:var(--radius);background:linear-gradient(135deg,var(--bg3),var(--bg2));box-shadow:var(--shadow)}
-.flashcard .back{transform:rotateY(180deg)}
-.flashcard .word{font-size:26px;font-weight:700;margin-bottom:8px;text-align:center}
-.flashcard .meta{font-size:13px;color:var(--text2)}
-.progress-bar{width:100%;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;margin:12px 0}
-.progress-bar .fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width 0.4s ease}
-.tag{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;margin:2px;background:rgba(233,69,96,0.15);color:var(--accent)}
-.tag.grammar{background:rgba(245,158,11,0.15);color:var(--accent2)}
-.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-.quiz-opt{padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);text-align:center;font-size:14px;cursor:pointer;transition:all 0.2s}
-.quiz-opt:active{transform:scale(0.97)}
-.quiz-opt.correct{border-color:var(--success);background:rgba(16,185,129,0.15)}
-.quiz-opt.wrong{border-color:var(--error);background:rgba(239,68,68,0.15)}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stat-card{background:rgba(255,255,255,0.03);border-radius:12px;padding:16px;text-align:center}
-.stat-card .num{font-size:28px;font-weight:700;color:var(--accent)}
-.stat-card .lbl{font-size:11px;color:var(--text2);margin-top:4px}
-.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:20px}
-.modal-overlay.show{display:flex}
-.modal{background:var(--bg2);border-radius:var(--radius);padding:24px;width:100%;max-width:400px;max-height:80vh;overflow-y:auto}
-.modal h3{margin-bottom:16px}
-.lesson-step{display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,0.03);border-radius:12px;margin-bottom:8px}
-.lesson-step .step-icon{font-size:24px}
+.flashcard .front,.flashcard .back{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;backface-visibility:hidden;border-radius:var(--radius);background:linear-gradient(145deg,#1e293b,#0f3460);border:1px solid rgba(255,255,255,0.06)}
+.flashcard .back{transform:rotateY(180deg);background:linear-gradient(145deg,#0f3460,#1e293b)}
+.flashcard .word{font-size:28px;font-weight:800;margin-bottom:10px;text-align:center;line-height:1.3}
+.flashcard .meta{font-size:13px;color:var(--text2);font-weight:500}
+.flashcard .tap-hint{position:absolute;bottom:16px;font-size:11px;color:var(--text2);opacity:0.6}
+/* Progress bar */
+.progress-bar{width:100%;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;margin:10px 0}
+.progress-bar .fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1)}
+/* Tags */
+.tag{display:inline-block;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;margin:2px;background:rgba(233,69,96,0.12);color:var(--accent);letter-spacing:0.3px}
+.tag.grammar{background:rgba(245,158,11,0.12);color:var(--accent2)}
+/* Lesson steps */
+.lesson-step{display:flex;align-items:center;gap:14px;padding:16px;background:rgba(255,255,255,0.02);border-radius:16px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.04);transition:all 0.2s;min-height:64px}
+.lesson-step:active{transform:scale(0.98);background:rgba(255,255,255,0.04)}
+.lesson-step .step-icon{font-size:28px;width:40px;text-align:center}
 .lesson-step .step-info{flex:1}
-.lesson-step .step-info h4{font-size:14px}
+.lesson-step .step-info h4{font-size:15px;font-weight:700;margin-bottom:2px}
 .lesson-step .step-info p{font-size:12px;color:var(--text2)}
-.lesson-step.done{opacity:0.5}
-.lesson-step.active-step{border:1px solid var(--accent)}
-.writing-result{margin-top:16px;padding:16px;background:rgba(255,255,255,0.03);border-radius:12px;line-height:1.8}
-.correction{background:rgba(239,68,68,0.2);text-decoration:line-through;padding:2px 4px;border-radius:4px}
-.suggestion{background:rgba(16,185,129,0.2);padding:2px 4px;border-radius:4px;font-weight:600}
-.leitner-boxes{display:flex;gap:6px;margin:12px 0}
-.leitner-box{flex:1;text-align:center;padding:8px 4px;border-radius:8px;font-size:11px;background:rgba(255,255,255,0.05)}
-.leitner-box .box-count{font-size:18px;font-weight:700;display:block}
-.empty-state{text-align:center;padding:40px 20px;color:var(--text2)}
-.empty-state .emoji{font-size:48px;margin-bottom:12px;display:block}
-.word-list-item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer}
+.lesson-step .step-time{font-size:12px;color:var(--text2);font-weight:600}
+.lesson-step.done{opacity:0.4}
+.lesson-step.done .step-icon::after{content:'✓';position:absolute;font-size:12px}
+.lesson-step.active-step{border-color:var(--accent);background:rgba(233,69,96,0.05)}
+/* Leitner boxes */
+.leitner-boxes{display:flex;gap:8px;margin:14px 0}
+.leitner-box{flex:1;text-align:center;padding:12px 4px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04)}
+.leitner-box .box-count{font-size:22px;font-weight:800;display:block;color:var(--accent)}
+.leitner-box .box-label{font-size:10px;color:var(--text2);margin-top:2px;display:block}
+/* Word list */
+.word-list-item{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.03);min-height:56px;transition:background 0.15s}
+.word-list-item:active{background:rgba(255,255,255,0.03)}
 .word-list-item:last-child{border:none}
-.word-list-item .de{font-weight:600;font-size:15px}
-.word-list-item .en{color:var(--text2);font-size:13px}
-.grammar-card{border-left:4px solid var(--accent2);padding-left:16px;margin-bottom:16px}
-.grammar-card h4{color:var(--accent2);margin-bottom:4px}
-.grammar-card p{font-size:14px;line-height:1.6}
-.action-btns{display:flex;gap:10px;margin-top:16px}
+.word-list-item .de{font-weight:700;font-size:16px}
+.word-list-item .en{color:var(--text2);font-size:13px;margin-top:2px}
+/* Grammar */
+.grammar-card{border-left:4px solid var(--accent2);padding:16px 16px 16px 20px;margin-bottom:14px;background:rgba(255,255,255,0.02);border-radius:0 16px 16px 0}
+.grammar-card h4{color:var(--accent2);margin-bottom:6px;font-size:15px}
+.grammar-card p{font-size:14px;line-height:1.7;color:var(--text2)}
+/* Action buttons */
+.action-btns{display:flex;gap:12px;margin-top:20px}
 .action-btns .btn{flex:1}
-.search-input{margin-bottom:16px}
-.settings-section{margin-bottom:24px}
-.settings-section h3{font-size:14px;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
-.due-badge{background:var(--accent);color:white;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:700}
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-card{background:rgba(255,255,255,0.03);border-radius:16px;padding:20px;text-align:center;border:1px solid rgba(255,255,255,0.04)}
+.stat-card .num{font-size:32px;font-weight:800;color:var(--accent);letter-spacing:-1px}
+.stat-card .lbl{font-size:11px;color:var(--text2);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+/* Bottom sheet modal */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0);transition:background 0.3s}
+.modal-overlay.show{display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,0.6)}
+.modal{background:var(--bg2);border-radius:24px 24px 0 0;padding:8px 24px max(env(safe-area-inset-bottom),24px);width:100%;max-width:500px;max-height:85vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1)}
+.modal-overlay.show .modal{transform:translateY(0)}
+.modal-handle{width:36px;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin:8px auto 20px}
+.modal h3{margin-bottom:20px;font-size:18px;font-weight:800}
+/* Writing */
+.writing-result{margin-top:18px;padding:18px;background:rgba(255,255,255,0.03);border-radius:16px;line-height:1.8;border:1px solid rgba(255,255,255,0.04);font-size:14px}
+/* Due badge */
+.due-badge{background:var(--accent);color:white;font-size:12px;padding:4px 10px;border-radius:12px;font-weight:800}
+/* Empty state */
+.empty-state{text-align:center;padding:48px 20px;color:var(--text2)}
+.empty-state .emoji{font-size:56px;margin-bottom:16px;display:block}
+.empty-state h3{color:var(--text);margin-bottom:8px}
+/* Settings */
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.04);min-height:52px}
+.setting-row:last-child{border:none}
+.setting-row span{font-size:15px}
+/* Search */
+.search-input{margin-bottom:14px}
+/* Section header */
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.section-header h2{font-size:22px;font-weight:800;letter-spacing:-0.5px}
+/* Prompt card */
+.prompt-label{font-size:11px;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.prompt-text{font-size:15px;line-height:1.6;color:var(--text)}
+/* Correction formatting */
+.correction{background:rgba(239,68,68,0.15);text-decoration:line-through;padding:2px 6px;border-radius:6px}
+.suggestion{background:rgba(16,185,129,0.15);padding:2px 6px;border-radius:6px;font-weight:700}
 </style>
 </head>
 <body>
+<div class="app">
 
 <!-- TOP BAR -->
 <div class="topbar">
   <h1>🇩🇪 Deutsch B2</h1>
-  <div class="streak" id="streakDisplay">🔥 0 Tage</div>
+  <div class="streak" id="streakDisplay">🔥 0</div>
 </div>
 
 <!-- PAGES -->
+<div class="pages">
 
-<!-- HEUTE (Daily Lesson) -->
+<!-- HEUTE -->
 <div class="page active" id="page-heute">
-  <div class="card">
-    <h2 style="margin-bottom:4px">Guten Tag, Isabella! 👋</h2>
+  <div class="card" style="background:linear-gradient(135deg,#1e293b,#0f3460);border:none">
+    <h2 style="margin-bottom:4px;font-size:20px">Guten Tag, Isabella 👋</h2>
     <p style="color:var(--text2);font-size:14px" id="todayDate"></p>
   </div>
   
   <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <h3>Tägliche Lektion</h3>
-      <span class="due-badge" id="dueCount">0 fällig</span>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <h3 style="font-size:17px;font-weight:800">Tägliche Lektion</h3>
+      <span class="due-badge" id="dueCount">0</span>
     </div>
     <div class="progress-bar"><div class="fill" id="lessonProgress" style="width:0%"></div></div>
-    <p style="font-size:12px;color:var(--text2);margin-bottom:16px" id="lessonProgressText">0 / 4 Schritte</p>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:14px" id="lessonProgressText">0 / 4 Schritte</p>
     
     <div class="lesson-step active-step" id="step1" onclick="startLessonStep(1)">
       <div class="step-icon">🃏</div>
@@ -120,7 +163,7 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:6px;font-wei
     </div>
     <div class="lesson-step" id="step2" onclick="startLessonStep(2)">
       <div class="step-icon">📖</div>
-      <div class="step-info"><h4>Grammatik-Übung</h4><p>5 Fragen zur schwächsten Regel</p></div>
+      <div class="step-info"><h4>Grammatik-Übung</h4><p>Schwächste Regel wiederholen</p></div>
       <div class="step-time">~3 min</div>
     </div>
     <div class="lesson-step" id="step3" onclick="startLessonStep(3)">
@@ -130,39 +173,39 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:6px;font-wei
     </div>
     <div class="lesson-step" id="step4" onclick="startLessonStep(4)">
       <div class="step-icon">📝</div>
-      <div class="step-info"><h4>Mini-Schreiben</h4><p>2-3 Sätze schreiben + Korrektur</p></div>
+      <div class="step-info"><h4>Mini-Schreiben</h4><p>2-3 Sätze + KI-Korrektur</p></div>
       <div class="step-time">~2 min</div>
     </div>
   </div>
 
   <div class="card">
-    <h3 style="margin-bottom:8px">Leitner-Boxen</h3>
+    <h3 style="font-size:15px;font-weight:700;margin-bottom:4px">Leitner-Boxen</h3>
     <div class="leitner-boxes" id="leitnerDisplay"></div>
   </div>
 </div>
 
 <!-- WORTSCHATZ -->
 <div class="page" id="page-wortschatz">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <h2>📚 Wortschatz</h2>
+  <div class="section-header">
+    <h2>Wortschatz</h2>
     <button class="btn btn-sm btn-primary" onclick="showAddWord()">+ Neu</button>
   </div>
-  <input class="search-input" type="text" placeholder="🔍 Suchen..." id="wordSearch" oninput="filterWords()">
+  <input class="search-input" type="text" placeholder="Suchen..." id="wordSearch" oninput="filterWords()">
   <div id="wordList"></div>
-  <p style="text-align:center;color:var(--text2);font-size:13px;margin-top:12px" id="wordCount"></p>
+  <p style="text-align:center;color:var(--text2);font-size:13px;margin-top:14px" id="wordCount"></p>
 </div>
 
 <!-- GRAMMATIK -->
 <div class="page" id="page-grammatik">
-  <h2 style="margin-bottom:16px">📖 Grammatik</h2>
+  <div class="section-header"><h2>Grammatik</h2></div>
   <div id="grammarList"></div>
 </div>
 
-<!-- KARTEN (Flashcards) -->
+<!-- KARTEN -->
 <div class="page" id="page-karten">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <h2>🃏 Karten</h2>
-    <span class="due-badge" id="cardsDue">0 fällig</span>
+  <div class="section-header">
+    <h2>Karten</h2>
+    <span class="due-badge" id="cardsDue">0</span>
   </div>
   <div id="flashcardArea">
     <div class="flashcard-container" onclick="flipCard()">
@@ -170,6 +213,7 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:6px;font-wei
         <div class="front">
           <div class="word" id="fcFront">—</div>
           <div class="meta" id="fcTopic"></div>
+          <div class="tap-hint">antippen zum Umdrehen</div>
         </div>
         <div class="back">
           <div class="word" id="fcBack">—</div>
@@ -181,7 +225,7 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:6px;font-wei
       <button class="btn btn-outline" onclick="cardAnswer(false)">🔄 Nochmal</button>
       <button class="btn btn-success" onclick="cardAnswer(true)">✅ Gewusst</button>
     </div>
-    <p style="text-align:center;color:var(--text2);font-size:13px;margin-top:12px" id="cardProgress"></p>
+    <p style="text-align:center;color:var(--text2);font-size:13px;margin-top:14px" id="cardProgress"></p>
   </div>
   <div id="flashcardEmpty" style="display:none" class="empty-state">
     <span class="emoji">🎉</span>
@@ -190,66 +234,102 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:6px;font-wei
   </div>
 </div>
 
+
+<!-- UEBUNGEN (Gap Fill + Grammar) -->
+<div class="page" id="page-uebungen">
+  <div class="section-header">
+    <h2>Übungen</h2>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-sm btn-primary" id="btnGapFill" onclick="startExercise('gap')">Lückentext</button>
+      <button class="btn btn-sm btn-outline" id="btnGrammarDrill" onclick="startExercise('grammar')">Grammatik</button>
+    </div>
+  </div>
+  <div id="exerciseArea">
+    <div class="card" id="exerciseCard">
+      <p style="font-size:11px;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px" id="exType">LÜCKENTEXT</p>
+      <p style="font-size:17px;line-height:1.6;margin-bottom:4px" id="exQuestion"></p>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px" id="exHint"></p>
+      <div class="quiz-options" id="exOptions"></div>
+      <p style="text-align:center;color:var(--text2);font-size:13px;margin-top:14px" id="exProgress"></p>
+    </div>
+    <div id="exResult" style="display:none" class="card">
+      <p style="font-size:15px;font-weight:700;margin-bottom:4px" id="exResultTitle"></p>
+      <p style="font-size:14px;color:var(--text2)" id="exResultDetail"></p>
+    </div>
+  </div>
+  <div id="exerciseEmpty" style="display:none" class="empty-state">
+    <span class="emoji">✅</span>
+    <h3>Runde fertig!</h3>
+    <p id="exScore"></p>
+    <button class="btn btn-primary" style="margin-top:16px" onclick="startExercise(currentExType)">🔄 Nochmal</button>
+  </div>
+</div>
+
 <!-- SCHREIBEN -->
 <div class="page" id="page-schreiben">
-  <h2 style="margin-bottom:16px">✏️ Schreiben</h2>
+  <div class="section-header"><h2>Schreiben</h2></div>
   <div class="card">
-    <div id="writingPrompt" style="margin-bottom:16px">
-      <p style="color:var(--text2);font-size:13px;margin-bottom:4px">AUFGABE:</p>
-      <p id="promptText" style="font-size:15px;line-height:1.5"></p>
+    <div style="margin-bottom:18px">
+      <p class="prompt-label">AUFGABE</p>
+      <p class="prompt-text" id="promptText"></p>
     </div>
     <div class="form-group">
-      <textarea id="writingInput" placeholder="Schreib hier deinen Text..."></textarea>
+      <textarea id="writingInput" placeholder="Schreib hier deinen Text..." rows="5"></textarea>
     </div>
     <button class="btn btn-primary btn-block" onclick="checkWriting()">📤 Korrektur prüfen</button>
     <div id="writingResult" class="writing-result" style="display:none"></div>
-    <button class="btn btn-outline btn-block" style="margin-top:12px" onclick="newPrompt()">🔄 Neue Aufgabe</button>
+    <button class="btn btn-ghost btn-block" style="margin-top:12px" onclick="newPrompt()">🔄 Neue Aufgabe</button>
   </div>
 </div>
 
 <!-- FORTSCHRITT -->
 <div class="page" id="page-fortschritt">
-  <h2 style="margin-bottom:16px">📊 Fortschritt</h2>
+  <div class="section-header"><h2>Fortschritt</h2></div>
   <div class="stats-grid" id="statsGrid"></div>
-  <div class="card" style="margin-top:16px">
-    <h3 style="margin-bottom:12px">Leitner-Verteilung</h3>
+  <div class="card" style="margin-top:14px">
+    <h3 style="font-size:15px;font-weight:700;margin-bottom:4px">Leitner-Verteilung</h3>
     <div class="leitner-boxes" id="statsLeitner"></div>
   </div>
   <div class="card">
-    <h3 style="margin-bottom:12px">Grammatik-Fortschritt</h3>
+    <h3 style="font-size:15px;font-weight:700;margin-bottom:12px">Grammatik</h3>
     <div id="grammarProgress"></div>
   </div>
-  <div class="card settings-section">
-    <h3>⚙️ Einstellungen</h3>
+  <div class="card">
+    <h3 style="font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Einstellungen</h3>
     <div class="setting-row">
-      <span>OpenAI API Key</span>
+      <span>API Key</span>
       <button class="btn btn-sm btn-outline" onclick="showApiKeyModal()">Ändern</button>
     </div>
     <div class="setting-row">
-      <span>Daten exportieren</span>
+      <span>Exportieren</span>
       <button class="btn btn-sm btn-outline" onclick="exportData()">📥 JSON</button>
     </div>
     <div class="setting-row">
-      <span>Daten importieren</span>
+      <span>Importieren</span>
       <button class="btn btn-sm btn-outline" onclick="document.getElementById('importFile').click()">📤 Laden</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
     </div>
   </div>
 </div>
 
+</div><!-- /pages -->
+
 <!-- BOTTOM NAV -->
 <nav class="navbar">
-  <button class="active" onclick="switchPage('heute')"><span class="icon">🎯</span>Heute</button>
-  <button onclick="switchPage('wortschatz')"><span class="icon">📚</span>Wörter</button>
-  <button onclick="switchPage('grammatik')"><span class="icon">📖</span>Grammatik</button>
-  <button onclick="switchPage('karten')"><span class="icon">🃏</span>Karten</button>
-  <button onclick="switchPage('schreiben')"><span class="icon">✏️</span>Schreiben</button>
-  <button onclick="switchPage('fortschritt')"><span class="icon">📊</span>Stats</button>
+  <button class="nav-btn active" onclick="switchPage('heute',this)"><span class="icon">🎯</span>Heute</button>
+  <button class="nav-btn" onclick="switchPage('wortschatz',this)"><span class="icon">📚</span>Wörter</button>
+  <button class="nav-btn" onclick="switchPage('grammatik',this)"><span class="icon">📖</span>Grammatik</button>
+  <button class="nav-btn" onclick="switchPage('karten',this)"><span class="icon">🃏</span>Karten</button>
+  <button class="nav-btn" onclick="switchPage('uebungen',this)"><span class="icon">🎯</span>Üben</button>
+  <button class="nav-btn" onclick="switchPage('fortschritt',this)"><span class="icon">📊</span>Stats</button>
 </nav>
 
-<!-- MODALS -->
-<div class="modal-overlay" id="addWordModal">
+</div><!-- /app -->
+
+<!-- MODALS (Bottom Sheet Style) -->
+<div class="modal-overlay" id="addWordModal" onclick="if(event.target===this)closeModal('addWordModal')">
   <div class="modal">
+    <div class="modal-handle"></div>
     <h3>Neues Wort</h3>
     <div class="form-group"><label>Deutsch</label><input id="newDe" placeholder="z.B. die Umgebung"></div>
     <div class="form-group"><label>English</label><input id="newEn" placeholder="e.g. environment"></div>
@@ -262,10 +342,11 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:6px;font-wei
   </div>
 </div>
 
-<div class="modal-overlay" id="apiKeyModal">
+<div class="modal-overlay" id="apiKeyModal" onclick="if(event.target===this)closeModal('apiKeyModal')">
   <div class="modal">
+    <div class="modal-handle"></div>
     <h3>🔑 OpenAI API Key</h3>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Wird lokal gespeichert. Nie an Dritte gesendet — nur direkt an OpenAI.</p>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Wird nur lokal gespeichert. Geht direkt an OpenAI — nie an Dritte.</p>
     <div class="form-group"><input id="apiKeyInput" type="password" placeholder="sk-..."></div>
     <div class="action-btns">
       <button class="btn btn-outline" onclick="closeModal('apiKeyModal')">Abbrechen</button>
@@ -275,493 +356,381 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:6px;font-wei
 </div>
 
 <script>
-// ===== DATA LAYER =====
-const STORAGE_KEY = 'deutsch_b2_data';
-const API_KEY_STORAGE = 'deutsch_b2_apikey';
+// ===== DATA =====
+const STORAGE_KEY='deutsch_b2_data',API_KEY_STORAGE='deutsch_b2_apikey';
+const DEFAULT_DATA={words:[],grammar:[],stats:{sessions:0,correct:0,total:0,streak:0,lastDate:null,lessonSteps:[false,false,false,false]},settings:{}};
 
-const DEFAULT_DATA = {
-  words: [],
-  grammar: [],
-  stats: { sessions: 0, correct: 0, total: 0, streak: 0, lastDate: null, lessonSteps: [false,false,false,false] },
-  settings: {}
-};
-
-// B2 Grammar topics
-const B2_GRAMMAR = [
-  {id:'konjII',title:'Konjunktiv II (Gegenwart)',content:'Irreale Wünsche, höfliche Bitten, irreale Bedingungen.\n\nBildung: würde + Infinitiv ODER Präteritumform (wäre, hätte, käme, ginge)\n\nBeispiel: Wenn ich mehr Zeit hätte, würde ich öfter lesen.\nIch wäre gern in Deutschland.'},
-  {id:'konjIIpast',title:'Konjunktiv II (Vergangenheit)',content:'Irreale Bedingungen in der Vergangenheit.\n\nBildung: hätte/wäre + Partizip II\n\nBeispiel: Wenn ich das gewusst hätte, wäre ich früher gekommen.\nEr hätte das nicht gesagt.'},
-  {id:'konjI',title:'Konjunktiv I — Indirekte Rede',content:'Wiedergabe von Aussagen anderer Personen (formell, Nachrichten).\n\nBildung: Stamm + e-Endungen (er sei, sie habe, man könne)\n\nBeispiel: Der Minister sagte, die Lage sei unter Kontrolle.\nSie meinte, sie habe keine Zeit.'},
-  {id:'passivV',title:'Vorgangspassiv (werden + Part. II)',content:'Beschreibt einen Prozess / eine Handlung.\n\nBildung: werden + Partizip II\n\nBeispiel: Das Haus wird gebaut. (Prozess läuft)\nDie E-Mail wurde gestern geschickt.'},
-  {id:'passivZ',title:'Zustandspassiv (sein + Part. II)',content:'Beschreibt das Ergebnis einer Handlung.\n\nBildung: sein + Partizip II\n\nBeispiel: Das Haus ist gebaut. (fertig, Ergebnis)\nDie Tür ist geöffnet.'},
-  {id:'relativ',title:'Relativsätze (+ Präpositionen)',content:'Nebensatz, der ein Nomen näher beschreibt.\n\nMit Präposition: Präp. + Relativpronomen\n\nBeispiel: Das ist der Mann, mit dem ich gesprochen habe.\nDie Stadt, in der ich wohne, ist klein.\nDas Buch, über das wir diskutiert haben.'},
-  {id:'konnektoren',title:'Zweiteilige Konnektoren',content:'sowohl...als auch (both...and)\nweder...noch (neither...nor)\nnicht nur...sondern auch (not only...but also)\nentweder...oder (either...or)\nje...desto/umso (the more...the more)\nzwar...aber (admittedly...but)\n\nBeispiel: Je mehr ich lerne, desto besser werde ich.'},
-  {id:'nominal',title:'Nominalisierung / Verbalisierung',content:'Verben → Nomen: entscheiden → die Entscheidung, sich bewerben → die Bewerbung\nAdjektive → Nomen: wichtig → die Wichtigkeit, fähig → die Fähigkeit\n\nUmgekehrt (Verbalisierung): Trotz des Regens → Obwohl es regnete\nBei der Ankunft → Als er ankam'},
-  {id:'partizip',title:'Partizip I & II als Adjektive',content:'Partizip I (aktiv, gleichzeitig): der schlafende Hund, die lachenden Kinder\nPartizip II (passiv, abgeschlossen): das geöffnete Fenster, der geschriebene Brief\n\nBildung: Partizip + Adjektivendung\nBeispiel: Die in Deutschland lebenden Ausländer...'},
-  {id:'temporal',title:'Temporalsätze (nachdem, bevor, seit)',content:'nachdem + Plusquamperfekt: Nachdem ich gegessen hatte, ging ich spazieren.\nbevor + Präsens/Präteritum: Bevor ich gehe, rufe ich dich an.\nseit/seitdem + Präsens: Seit ich hier wohne, fühle ich mich wohl.\nbis: Ich warte, bis du kommst.'},
-  {id:'genitiv',title:'Präpositionen mit Genitiv',content:'trotz (despite): trotz des schlechten Wetters\nwegen (because of): wegen der Verspätung\nwährend (during): während des Unterrichts\nstatt/anstatt (instead of): statt eines Briefs\ninnerhalb/außerhalb: innerhalb eines Jahres'},
-  {id:'modal',title:'Subjektive Bedeutung der Modalverben',content:'Vermutung/Wahrscheinlichkeit:\nmüssen = sehr sicher: Er muss krank sein. (95%)\ndürfte = wahrscheinlich: Sie dürfte schon da sein. (80%)\nkönnte/kann = möglich: Das könnte stimmen. (50%)\nmag = konzessiv: Das mag sein, aber...\nsollen = Gerücht: Er soll sehr reich sein. (man sagt)\nwollen = Behauptung: Sie will das gesehen haben. (sie behauptet)'}
+const B2_GRAMMAR=[
+{id:'konjII',title:'Konjunktiv II (Gegenwart)',content:'Irreale Wünsche, höfliche Bitten, irreale Bedingungen.\n\nBildung: würde + Infinitiv ODER Präteritumform (wäre, hätte, käme, ginge)\n\nBeispiel: Wenn ich mehr Zeit hätte, würde ich öfter lesen.\nIch wäre gern in Deutschland.'},
+{id:'konjIIpast',title:'Konjunktiv II (Vergangenheit)',content:'Irreale Bedingungen in der Vergangenheit.\n\nBildung: hätte/wäre + Partizip II\n\nBeispiel: Wenn ich das gewusst hätte, wäre ich früher gekommen.'},
+{id:'konjI',title:'Konjunktiv I — Indirekte Rede',content:'Wiedergabe von Aussagen anderer (formell, Nachrichten).\n\nBildung: Stamm + e-Endungen (er sei, sie habe, man könne)\n\nBeispiel: Der Minister sagte, die Lage sei unter Kontrolle.'},
+{id:'passivV',title:'Vorgangspassiv (werden + Part. II)',content:'Beschreibt einen Prozess / eine Handlung.\n\nBildung: werden + Partizip II\n\nBeispiel: Das Haus wird gebaut. (Prozess läuft)\nDie E-Mail wurde gestern geschickt.'},
+{id:'passivZ',title:'Zustandspassiv (sein + Part. II)',content:'Beschreibt das Ergebnis einer Handlung.\n\nBildung: sein + Partizip II\n\nBeispiel: Das Haus ist gebaut. (fertig)\nDie Tür ist geöffnet.'},
+{id:'relativ',title:'Relativsätze (+ Präpositionen)',content:'Nebensatz, der ein Nomen näher beschreibt.\n\nMit Präp.: Präp. + Relativpronomen\n\nBeispiel: Das ist der Mann, mit dem ich gesprochen habe.\nDie Stadt, in der ich wohne, ist klein.'},
+{id:'konnektoren',title:'Zweiteilige Konnektoren',content:'sowohl...als auch (both...and)\nweder...noch (neither...nor)\nnicht nur...sondern auch (not only...but also)\nentweder...oder (either...or)\nje...desto/umso (the more...the more)\nzwar...aber (admittedly...but)'},
+{id:'nominal',title:'Nominalisierung / Verbalisierung',content:'Verben → Nomen: entscheiden → die Entscheidung\nAdj. → Nomen: wichtig → die Wichtigkeit\n\nVerbalisierung: Trotz des Regens → Obwohl es regnete\nBei der Ankunft → Als er ankam'},
+{id:'partizip',title:'Partizip I & II als Adjektive',content:'Part. I (aktiv): der schlafende Hund\nPart. II (passiv): das geöffnete Fenster\n\nBildung: Partizip + Adjektivendung\nDie in Deutschland lebenden Ausländer...'},
+{id:'temporal',title:'Temporalsätze (nachdem, bevor, seit)',content:'nachdem + Plusquamperfekt: Nachdem ich gegessen hatte, ging ich spazieren.\nbevor: Bevor ich gehe, rufe ich dich an.\nseit/seitdem: Seit ich hier wohne, fühle ich mich wohl.'},
+{id:'genitiv',title:'Präpositionen mit Genitiv',content:'trotz: trotz des schlechten Wetters\nwegen: wegen der Verspätung\nwährend: während des Unterrichts\nstatt: statt eines Briefs\ninnerhalb/außerhalb: innerhalb eines Jahres'},
+{id:'modal',title:'Subjektive Modalverben',content:'müssen = sehr sicher (95%): Er muss krank sein.\ndürfte = wahrscheinlich (80%): Sie dürfte da sein.\nkönnte = möglich (50%): Das könnte stimmen.\nsollen = Gerücht: Er soll reich sein.\nwollen = Behauptung: Sie will das gesehen haben.'}
 ];
 
-// Writing prompts for B2
-const WRITING_PROMPTS = [
-  {type:'E-Mail',task:'Schreiben Sie eine E-Mail an Ihren Vermieter. Beschweren Sie sich über den Lärm von der Baustelle nebenan. Bitten Sie um eine Lösung.'},
-  {type:'Forumsbeitrag',task:'Schreiben Sie einen Beitrag in einem Online-Forum zum Thema: "Sollte Homeoffice die neue Normalität sein?" Nennen Sie Vor- und Nachteile.'},
-  {type:'E-Mail',task:'Ein Freund möchte nach Deutschland ziehen. Schreiben Sie ihm eine E-Mail mit Tipps zur Wohnungssuche.'},
-  {type:'Forumsbeitrag',task:'Reagieren Sie auf den Forumsbeitrag: "Soziale Medien machen einsam." Stimmen Sie zu oder widersprechen Sie?'},
-  {type:'Beschwerde',task:'Schreiben Sie an ein Online-Geschäft. Sie haben ein falsches Produkt bekommen. Fordern Sie einen Umtausch.'},
-  {type:'E-Mail',task:'Ihr Deutschkurs wurde abgesagt. Schreiben Sie eine E-Mail an die Sprachschule und fragen Sie nach Alternativen.'},
-  {type:'Forumsbeitrag',task:'Thema: "Brauchen wir noch Bargeld?" Schreiben Sie Ihre Meinung mit Beispielen.'},
-  {type:'E-Mail',task:'Schreiben Sie an einen Kollegen. Schlagen Sie vor, ein gemeinsames Projekt zu starten. Erklären Sie Ihre Idee.'},
-  {type:'Forumsbeitrag',task:'Kommentieren Sie: "Künstliche Intelligenz wird viele Jobs ersetzen." Was denken Sie?'},
-  {type:'Beschwerde',task:'Ihr Zug hatte 2 Stunden Verspätung. Schreiben Sie an die Bahngesellschaft und fordern Sie eine Entschädigung.'}
+const WRITING_PROMPTS=[
+{type:'E-Mail',task:'Schreiben Sie an Ihren Vermieter. Beschweren Sie sich über den Lärm von der Baustelle nebenan. Bitten Sie um eine Lösung.'},
+{type:'Forum',task:'Thema: "Sollte Homeoffice die neue Normalität sein?" Nennen Sie Vor- und Nachteile.'},
+{type:'E-Mail',task:'Ein Freund möchte nach Deutschland ziehen. Geben Sie Tipps zur Wohnungssuche.'},
+{type:'Forum',task:'"Soziale Medien machen einsam." Stimmen Sie zu oder widersprechen Sie?'},
+{type:'Beschwerde',task:'Sie haben online ein falsches Produkt bekommen. Fordern Sie einen Umtausch.'},
+{type:'E-Mail',task:'Ihr Deutschkurs wurde abgesagt. Fragen Sie die Sprachschule nach Alternativen.'},
+{type:'Forum',task:'"Brauchen wir noch Bargeld?" Schreiben Sie Ihre Meinung mit Beispielen.'},
+{type:'E-Mail',task:'Schlagen Sie einem Kollegen ein gemeinsames Projekt vor. Erklären Sie Ihre Idee.'},
+{type:'Forum',task:'"KI wird viele Jobs ersetzen." Was denken Sie?'},
+{type:'Beschwerde',task:'Ihr Zug hatte 2 Stunden Verspätung. Fordern Sie eine Entschädigung.'}
 ];
 
-function loadData() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const d = JSON.parse(raw);
-      return {...DEFAULT_DATA, ...d, stats:{...DEFAULT_DATA.stats, ...d.stats}};
-    }
-  } catch(e) {}
-  return JSON.parse(JSON.stringify(DEFAULT_DATA));
-}
+function loadData(){try{const r=localStorage.getItem(STORAGE_KEY);if(r){const d=JSON.parse(r);return{...DEFAULT_DATA,...d,stats:{...DEFAULT_DATA.stats,...d.stats}}}}catch(e){}return JSON.parse(JSON.stringify(DEFAULT_DATA))}
+function saveData(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
+function getApiKey(){return localStorage.getItem(API_KEY_STORAGE)||''}
+function setApiKey(k){localStorage.setItem(API_KEY_STORAGE,k)}
 
-function saveData(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
 
-function getApiKey() { return localStorage.getItem(API_KEY_STORAGE) || ''; }
-function setApiKey(k) { localStorage.setItem(API_KEY_STORAGE, k); }
+// ===== PRELOADED DATA (463 words + grammar exercises) =====
+const PRELOAD_WORDS = [{"id":"19e68a05c3dmncexx","de":"Im Westen","en":"to the west of","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dhwgkbq","de":"im Osten","en":"to the east of","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dp0efa9","de":"die Erfahrung","en":"experience","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dzbifo6","de":"Urlaub nehmen","en":"to take time off","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3drmvcv7","de":"herausfiltern","en":"to filter out","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dy28bto","de":"erkennen","en":"to recognize","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d2t68u7","de":"der TÃ¤ter","en":"perpetrator","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dk10467","de":"das Patenkind","en":"godchild","topic":"Family & People","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ddirco8","de":"der Patenonkel","en":"godfather","topic":"Family & People","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3djb67mw","de":"die Taufpatin","en":"godmother","topic":"Family & People","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d0pnt5c","de":"Ski heil","en":"good skiing","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d1920lw","de":"beschÃ¤digen","en":"to damage","topic":"Building & Damage","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dlake2c","de":"zerstÃ¶ren","en":"to destroy","topic":"Building & Damage","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dav066z","de":"schleichen","en":"to sneak","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3df90pjp","de":"humpeln","en":"to limp","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d55uw45","de":"hÃ¼pfen","en":"to hop","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dynurmn","de":"huschen","en":"to scurry","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dw63sh1","de":"watscheln","en":"to waddle","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dqcbasv","de":"kriechen","en":"to crawl","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d40we1w","de":"trampeln","en":"to trample","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dtzgzgr","de":"der Begriff","en":"term","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d6i576a","de":"umfassen","en":"to include","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d434se3","de":"ansprachen","en":"speeches","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d6wjfrb","de":"der Bedarf","en":"need","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3djoybm2","de":"gezielt","en":"targeted","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d8d9lvd","de":"Aufmerksamkeit","en":"attention","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dnhfnjg","de":"betreffen","en":"to affect","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ds3xcmc","de":"Bekanntheitsgrad","en":"brand awareness","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dvn87wu","de":"der Betrieb","en":"business","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dthu9pv","de":"beachten","en":"to consider","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dpbgmot","de":"erfahren","en":"to find out","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d3ihg3m","de":"anpassen","en":"to adjust","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dmk0k4h","de":"angeberisch","en":"pretentious","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d4cuaf6","de":"begeistert","en":"enthusiastic","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dvefabt","de":"kaltblÃ¼tig","en":"cold blooded","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dgoqcs9","de":"selbstbewusst","en":"self-confident","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dl26gmz","de":"warmherzig","en":"warm-hearted","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dyokz4b","de":"niedergeschlagen","en":"depressed","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3do3j2kc","de":"verÃ¤rgert","en":"annoyed","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dshuwcc","de":"froh","en":"happy","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d6em15n","de":"zurÃ¼ckhaltend","en":"reserved","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dkzj2sy","de":"schlecht gelaunt","en":"in a bad mood","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dkq66vv","de":"Ã¼bermutig","en":"carefree","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dwfjsi9","de":"geizig","en":"stingy","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d6tmv7h","de":"bescheiden","en":"modest","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3da4tmwx","de":"mutig","en":"brave","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dptfksu","de":"genervt","en":"annoyed","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dd8o69u","de":"hoffnungsvoll","en":"hopeful","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d9i5via","de":"groÃŸzugig","en":"generous","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3drb50yk","de":"entÃ¤uscht","en":"disappointed","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dzgshh4","de":"Ã¤ngstich","en":"scared","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d532qn6","de":"der Trost","en":"comfort","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3db1o18u","de":"schwach","en":"weak","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dllnjs9","de":"der EigentÃ¼mer","en":"owner","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d24i1mv","de":"das GewÃ¶lbe","en":"arch / vault","topic":"Building & Damage","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d18igwn","de":"der Strafzettel","en":"fine / ticket","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dv1h4tn","de":"das Strafmandat","en":"fine / ticket","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dxgom9e","de":"stehen auf etw.","en":"to like","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dgjate4","de":"Fluglotse","en":"air traffic controller","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d4tngg1","de":"der Kompromiss","en":"compromise","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3de28ln0","de":"der Funkturm","en":"radio tower","topic":"Building & Damage","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dvdzlte","de":"der Baumangel","en":"construction defect","topic":"Building & Damage","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dsau1da","de":"der Wasserschaden","en":"water damage","topic":"Building & Damage","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dw54dz7","de":"Das Stromaggregat","en":"power unit","topic":"Building & Damage","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dxujfol","de":"der Schutzschalter","en":"safety switch","topic":"Building & Damage","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dq3tlxo","de":"der Folgeschaden","en":"consequential damage","topic":"Building & Damage","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d7skpbj","de":"die Einrichtung","en":"facility / furnishings","topic":"Building & Damage","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d2fpcbk","de":"versprechen","en":"to promise","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d30nl01","de":"die EnttÃ¤uschung","en":"disappointment","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d7z8fks","de":"versteckt","en":"hidden","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d8cua52","de":"die SteilkÃ¼ste","en":"cliff","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dncuhp5","de":"die Unterkunft","en":"accommodation","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d7emafd","de":"die Lage, Lagen","en":"situation, location","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d53ryf7","de":"zerrissen","en":"torn","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dbh6vmh","de":"der Aufstand","en":"uprising","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dbanvhf","de":"erbittert","en":"fierce","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d1cf1yz","de":"verachten","en":"to despise","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dl996q0","de":"stÃ¼rzen","en":"to fall","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3drn4t63","de":"der Irrtum","en":"mistake","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d7jv7y5","de":"ahnen","en":"to suspect, anticipate","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dkwygjg","de":"tapfer","en":"brave","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3daz6nj0","de":"der Haken","en":"hook","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dgoyu5h","de":"die Verschwinden","en":"disappearance","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dlyd9yx","de":"offensichtlich","en":"obviously","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d3n7idx","de":"der Mord, die Morde","en":"murder","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ddh5zbp","de":"umgebracht","en":"killed","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d7ab7et","de":"die Todesstrafe","en":"death penalty","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dce9gzi","de":"der Beamter, Beamten","en":"civil servant","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dwqnxyj","de":"zusagen","en":"to accept","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d3spr7v","de":"verdienen","en":"to earn","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ds6lgvm","de":"ablehnen","en":"to reject","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dkt3vgo","de":"verhalten sich","en":"to behave, to react","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dv9fkvn","de":"fordern","en":"to demand","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d1swc0v","de":"umsonst","en":"free of charge; in vain","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dbu26j0","de":"verzweifelt","en":"desperate","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dtf5j7y","de":"ernste","en":"serious","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dcrgfob","de":"Fehlentscheidung","en":"bad decision","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dp0h245","de":"entspannen (sich)","en":"to relax","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d7195lw","de":"aufgeregt","en":"excited","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dizm8hn","de":"ubertreiben","en":"to exaggerate","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dxske4w","de":"der Wert","en":"value","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dhzkon1","de":"wahrlos","en":"random","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d1g103x","de":"der Aufwand","en":"effort","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dgxeflx","de":"im Verlauf von","en":"in the course of","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d5asy95","de":"gewÃ¼hnlich","en":"common","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d3ze80t","de":"der Bogen, BÃ¶gen","en":"arch","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3druyv52","de":"der Pfeil","en":"arrow","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d93jru8","de":"AusÃ¼bung","en":"practice","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d1is9fu","de":"die Abstimmung","en":"vote","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dnz04mi","de":"fehlerhaft","en":"faulty","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dun95z2","de":"unzutreffend","en":"inapplicable","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dgzxbb3","de":"Verwandter, Verwandte","en":"relative","topic":"Family & People","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dz5660s","de":"das Ufer","en":"shore","topic":"Family & People","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d9n9uqo","de":"PrÃ¤sens","en":"ich werde, du wirst, er/sie/es wird, wir werden, ihr werdet, sie/Sie werden","topic":"Grammar & Conjugation","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dxcamij","de":"PrÃ¤teritum","en":"ich wurde, du wurdest, er/sie/es wurde, wir wurden, ihr wurdet, sie/Sie wurden","topic":"Grammar & Conjugation","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dj1u94d","de":"Perfekt","en":"ich bin geworden, du bist geworden, er/sie/es ist geworden, wir sind geworden","topic":"Grammar & Conjugation","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dmwivvo","de":"Plusquamperfekt","en":"ich war geworden, du warst geworden, er/sie/es war geworden, wir waren geworden","topic":"Grammar & Conjugation","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dbc42fg","de":"Futur I","en":"ich werde werden, du wirst werden, er/sie/es wird werden","topic":"Grammar & Conjugation","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dm15wkb","de":"Konjunktiv II","en":"ich wÃ¼rde, du wÃ¼rdest, er/sie/es wÃ¼rde, wir wÃ¼rden, ihr wÃ¼rdet","topic":"Grammar & Conjugation","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d5ibiuh","de":"Mal schauen","en":"let's see","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dhomoqp","de":"Ich weiÃŸ nicht, ob der Aufwand sich lohnt","en":"I don't know if the effort is worth it.","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d5qzonq","de":"notwendig","en":"necessary","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dtkypw1","de":"die Naht","en":"seam","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d3c4ldm","de":"nÃ¤hen","en":"to sew","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dbgeuiy","de":"ermitteln","en":"to investigate","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d278akf","de":"die Tat","en":"action","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dacujg6","de":"die SchÃ¤den","en":"damages","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dzf5b3w","de":"einigen sich","en":"to reach an agreement","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dhmlggj","de":"die Verteidigung","en":"defence","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dyit75f","de":"der Gesetz","en":"law","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dgcqpfy","de":"reichen (ausreichen)","en":"to be enough","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dwztcfs","de":"die Gemeinschaft","en":"community","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dbtp7ax","de":"der Spiess","en":"skewer","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dyprdir","de":"festnehmen","en":"to arrest","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dl4mjq2","de":"der Weltraum","en":"space","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dodrt4v","de":"erhalten","en":"to receive","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d2jab86","de":"Zutritt","en":"entry","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d5pxewx","de":"der Missbrauch","en":"abuse","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dsp6z00","de":"wehren gegen","en":"to defend against","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dfc2kdw","de":"vorstellen","en":"to imagine","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d6d82b9","de":"in die Spulmachine einraumen","en":"to put in the dishwasher","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dxtbbj4","de":"unangenehm","en":"unpleasant","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dns10af","de":"angenehm","en":"pleasant","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d9ds41e","de":"TÃ¤tigkeit","en":"activity","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dfkka4a","de":"empfinden, empfindet, empfand, hat empfunden","en":"to feel","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dj0zxn0","de":"zur Arbeit","en":"to work","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dm0we2p","de":"Das dauert ewig!","en":"That takes forever!","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dgmr9o9","de":"eng","en":"tight","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dal2ri2","de":"entwickeln, entwickelt, entwickelte, hat entwickelt","en":"to develop","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d9huvxj","de":"stÃ¶rend","en":"annoying","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ddp5kty","de":"zeitraubend","en":"time consuming","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d0g4mlv","de":"etwas ernst meinen","en":"to be serious about something","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dgqwo3w","de":"wozu","en":"What for?","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d83u4h2","de":"flÃ¼stern","en":"to whisper","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d5mdo00","de":"der Nachweis","en":"proof","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d78z0ut","de":"verlangen","en":"to demand","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d9en9ht","de":"die Ausbildung","en":"training","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dvh0mbt","de":"umgangssprachlich","en":"colloquial","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dalblqj","de":"unterstÃ¼tzen","en":"to support","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dr0255x","de":"der Berater, die Beraterin","en":"consultant","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dh8tvv5","de":"der Studiengang","en":"course of study","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3duy6dm5","de":"auÃŸerdem","en":"besides","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3duq6wr2","de":"unterhalten","en":"to talk","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dxqqfw9","de":"beibringen","en":"to teach","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d8sg4ul","de":"aufpassen","en":"to pay attention","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d0cjb76","de":"anlÃ¼gen","en":"to lie to","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d591u96","de":"vertrauen","en":"to trust","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dg54oa2","de":"shaffen","en":"to manage","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dzy7l95","de":"stolz auf etwas sein","en":"to be proud of something","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3duqflus","de":"fliehen","en":"to flee","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3diekdap","de":"besonders","en":"particularly","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ds5z050","de":"Mitglieder","en":"members","topic":"Family & People","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dxrpmrg","de":"jemanden anlÃ¼gen","en":"to lie to someone","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ddym97h","de":"etwas erfahren","en":"to find out something","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d57jand","de":"enttÃ¤uscht von","en":"disappointed by","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dxs8uah","de":"zurechtkommen","en":"to manage","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d2f3ozs","de":"zu etwas beitragen","en":"to contribute to something","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d34s8hn","de":"das Vorbild","en":"role model","topic":"Family & People","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dsyfr4n","de":"erfolgreich","en":"successful","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dtbs5sk","de":"unabhÃ¤ngig","en":"independent","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d6irhat","de":"deswegen","en":"therefore","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d5h0i3c","de":"Betriebswirtschaft","en":"business studies","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d4bcurw","de":"GeschÃ¤ftsmann","en":"businessman","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dutardv","de":"erzÃ¤hlen von + D","en":"to tell about","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dsbv3kw","de":"einleiten","en":"to introduce","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d9mbdg2","de":"fÃ¼rchten sich vor D.","en":"to be afraid of","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dsxorw5","de":"Angst haben vor","en":"to be afraid of","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dcl7zry","de":"interessieren (sich fÃ¼r)","en":"to be interested in","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3digvcgx","de":"beschÃ¤ftigen sich mit","en":"to occupy oneself with","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dnwptuq","de":"achten auf","en":"to pay attention to","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dg4doxk","de":"verzichten auf","en":"to do without","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3diqg2s3","de":"bisher","en":"so far","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dy5167x","de":"abgeben","en":"to hand in","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3duko29c","de":"rechtzeitig","en":"on time; early enough","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dm34yt0","de":"einhalten","en":"to adhere to","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dmp6rpt","de":"das Gehirn","en":"brain","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d9uy79e","de":"sich schonen","en":"take it easy","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dqsl1zx","de":"schwindelig sein","en":"to feel dizzy","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3daizvdc","de":"Ã¼bel","en":"nauseous","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dxc16e2","de":"geben auf","en":"to give up","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dm0hpm7","de":"Gips","en":"cast","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d17itj6","de":"Was fehlt dir?","en":"What's wrong with you?","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d4vdnpt","de":"anfahren","en":"to hit","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d9wfkf3","de":"entzunden","en":"to inflame","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dqy3xf2","de":"Nebenwirkungen","en":"side effects","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dld0ohw","de":"verschwenden, verschwendete, hat verschwendet","en":"to waste","topic":"Movement & Verbs","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dho7y9h","de":"Sport treiben","en":"to do sports","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dhqvuvb","de":"kÃ¼mmern (sich um)","en":"to look after","topic":"Health & Body","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d6jsyec","de":"merken","en":"to notice","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d47qirb","de":"schuld sein an + D","en":"to be guilty of","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dfzm9mv","de":"erledigen","en":"to take care of","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dvlpoie","de":"aufschieben","en":"to postpone","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dew884t","de":"sich Zeit nehmen fÃ¼r","en":"to take time for","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d94i32w","de":"* (Zeit) vergehen, verging, ist vergangen","en":"Time goes by","topic":"Grammar & Conjugation","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d64q2j3","de":"die Aufsichtspflicht","en":"duty of supervision","topic":"Crime & Law","note":"gesetzlich verankerte Verantwortung","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dducyne","de":"verletzen","en":"to violate / to injure","topic":"Crime & Law","note":"eine Regel oder Grenze Ã¼berschreiten","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dcibbpw","de":"neidisch","en":"jealous / envious","topic":"Emotions & Character","note":"missgÃ¼nstig","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d7fmhbn","de":"strafbar","en":"punishable / illegal","topic":"Crime & Law","note":"rechtlich verfolgbar","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3duiemtj","de":"die AufsichtsbehÃ¶rde","en":"supervisory authority","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d3rivug","de":"das Ã–ko-Siegel","en":"eco-label","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dvws88m","de":"erneuerbare Energien","en":"renewable energies","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dxru77q","de":"der CO2-AusstoÃŸ","en":"CO2 emissions","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dvn7f80","de":"klimafreundlich","en":"climate-friendly","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d40fpck","de":"die Solaranlage","en":"solar installation","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d69q1xc","de":"das Speed-Dating","en":"speed dating","topic":"Phrases & Expressions","note":"organisierte Veranstaltung zum Kennenlernen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d9h87as","de":"die Teilnehmerkarte","en":"participant card (Ja/Nein form)","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ddobxdg","de":"die Auswertung","en":"evaluation / analysis of results","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ds3apai","de":"die AtmosphÃ¤re","en":"atmosphere / ambiance","topic":"Vocabulary","note":"allgemeine Stimmung an einem Ort","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d6kx7jg","de":"nonverbal","en":"nonverbal (gestures, expressions)","topic":"Vocabulary","note":"ohne Worte kommuniziert","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d1m1f90","de":"die Sympathie","en":"sympathy / liking","topic":"Emotions & Character","note":"positives GefÃ¼hl gegenÃ¼ber jemandem","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3duxh3c5","de":"das ResÃ¼mee","en":"summary / final conclusion","topic":"Vocabulary","note":"persÃ¶nliche Zusammenfassung","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dfu3kbc","de":"einen Versuch wagen","en":"to dare to try","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d4ytxdi","de":"vÃ¶llig Ã¼berrascht sein","en":"to be completely surprised","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d8ljs8d","de":"E-Mail-Adressen austauschen","en":"to exchange email addresses","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d0z79kw","de":"in kurzer Zeit kennenlernen","en":"to get to know in a short time","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d295t6z","de":"Die Falle ist vorbereitet.","en":"The trap is prepared. [Zustandspassiv]","topic":"Grammar & Conjugation","note":"sein + Partizip II","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dqg42pt","de":"Das Schild ist geschrieben.","en":"The sign is written. [Zustandspassiv]","topic":"Grammar & Conjugation","note":"Zustandspassiv","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d8zpvlg","de":"Der Tisch ist festlich gedeckt.","en":"The table is set. [Zustandspassiv]","topic":"Grammar & Conjugation","note":"Zustandspassiv","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dhm3ale","de":"stornieren","en":"to cancel / reverse an order","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dgkxo2s","de":"eingespielt","en":"well-coordinated / in sync","topic":"Work & Study","note":"ein eingespieltes Team","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dsnhavq","de":"das Lager","en":"the warehouse / storage","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d45huis","de":"ins Lager gehen","en":"to go to the warehouse","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dengipw","de":"einen Prozess verfolgen","en":"to follow / monitor a process","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dkve81b","de":"ein Problem lÃ¶sen","en":"to solve a problem","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d71t2qv","de":"etwas wahrnehmen","en":"to perceive / notice / fulfil (a duty)","topic":"Vocabulary","note":"auch: eine Pflicht wahrnehmen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dnv3hlq","de":"sich nicht daran halten","en":"to not comply with / not adhere to","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dzvwbv6","de":"die PrivatsphÃ¤re verletzen","en":"to violate someone's privacy","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d3r92dk","de":"die Verantwortung Ã¼bertragen","en":"to delegate responsibility","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d0a21ya","de":"warnen / hat gewarnt","en":"to warn / has warned","topic":"Movement & Verbs","note":"regelmÃ¤ÃŸiges Verb","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dramevx","de":"senken","en":"to lower / reduce","topic":"Vocabulary","note":"den CO2-AusstoÃŸ senken","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dfh6b7a","de":"steigen","en":"to rise / increase","topic":"Vocabulary","note":"unregelmÃ¤ÃŸig: stieg, ist gestiegen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dp09gdd","de":"sich stark auf etwas fokussieren","en":"to focus strongly on something","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3dufkgxv","de":"nach Uganda fliegen","en":"to fly to Uganda (nach, not in)","topic":"Phrases & Expressions","note":"âš ï¸ Fehlerkorrektur","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3do0h8ld","de":"eine Antwort bekommen","en":"to receive an answer (bekommen not nehmen)","topic":"Phrases & Expressions","note":"âš ï¸ Fehlerkorrektur","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3d76tf9m","de":"in der Mitte von allem","en":"in the middle of everything","topic":"Phrases & Expressions","note":"âš ï¸ Fehlerkorrektur: von allem nicht von alles","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e8rwp9i","de":"den ich gelernt habe","en":"which I learned (Akkusativ rel. pronoun)","topic":"Grammar & Conjugation","note":"âš ï¸ den not der","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3etii9ow","de":"sie sind gegangen","en":"they went (movement â†’ sein!)","topic":"Grammar & Conjugation","note":"âš ï¸ sein not haben fÃ¼r Bewegungsverben","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e1lk8yu","de":"das Dorf","en":"the village","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ety2z9p","de":"anstrengend","en":"exhausting / strenuous","topic":"Vocabulary","note":"Komp: anstrengender, Sup: am anstrengendsten","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3exsiehh","de":"der Akku","en":"the battery","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e6nucun","de":"die Ladestation","en":"the charging station","topic":"Travel & Places","note":"MobilitÃ¤t der Zukunft","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3exacgf4","de":"einen Verein grÃ¼nden","en":"to found a club or association","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e96f8vd","de":"sich anmelden","en":"to register / sign up","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e1f8xx7","de":"sich kennenlernen","en":"to get to know each other","topic":"Reflexive & Prepositions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ep9lvbh","de":"kaum","en":"barely / hardly","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3et58c6a","de":"kÃ¼ndigen","en":"to quit / give notice / cancel","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3et6mw92","de":"lÃ¼gen / log / gelogen","en":"to lie (untruth)","topic":"Movement & Verbs","note":"unregelmÃ¤ÃŸig","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eaw3h9o","de":"zÃ¶gern","en":"to hesitate","topic":"Movement & Verbs","note":"regelmÃ¤ÃŸig: zÃ¶gerte, gezÃ¶gert","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eutulxh","de":"ziehen / zog / gezogen","en":"to move (home) / to pull","topic":"Movement & Verbs","note":"unregelmÃ¤ÃŸig","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e04quhn","de":"der KlÃ¤ger","en":"the plaintiff / claimant","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e6re9ca","de":"der Richter","en":"the judge","topic":"Crime & Law","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ejwmufa","de":"die MobilitÃ¤t","en":"mobility","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3efuiyil","de":"der Klimawandel","en":"climate change","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eddgu3j","de":"begrenzte Ressourcen","en":"limited resources","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e8ejmxt","de":"der technische Fortschritt","en":"technological progress","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eedahwk","de":"der Verbrennungsmotor","en":"combustion engine","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e8csdj1","de":"Ã¶ffentliche Verkehrsmittel (Ã–ffis)","en":"public transport","topic":"Travel & Places","note":"colloquial: Ã–ffis","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ezjdg5z","de":"das Carsharing","en":"car sharing","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e4hpnky","de":"Er sagt, er habe keine Zeit.","en":"He says he has no time. [Konjunktiv I]","topic":"Grammar & Conjugation","note":"indirekte Rede","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ezqilis","de":"die Autorin schreibt, die MobilitÃ¤t verÃ¤ndere sich.","en":"The author writes mobility is changing. [Konj. I]","topic":"Grammar & Conjugation","note":"Konjunktiv I","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ee9ryex","de":"Experten erklÃ¤ren, der Verkehr mÃ¼sse nachhaltiger werden.","en":"Experts say transport must be more sustainable.","topic":"Grammar & Conjugation","note":"Konjunktiv I: mÃ¼ssen â†’ mÃ¼sse","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eft6rxl","de":"HÃ¤tte ich frÃ¼her reagiert, hÃ¤tte man den Konflikt vermieden.","en":"If I had reacted earlier, the conflict would have been avoided.","topic":"Grammar & Conjugation","note":"Konjunktiv II Vergangenheit","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ejtlqcp","de":"Ohne ihre UnterstÃ¼tzung wÃ¤re ich nicht so weit gekommen.","en":"Without her support I would not have come this far.","topic":"Grammar & Conjugation","note":"wÃ¤re + Partizip II","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e40ogy8","de":"der Schadstoffe ausstoÃŸen","en":"to emit pollutants","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eaiboc8","de":"aufbauend","en":"building on / progressive / incremental","topic":"Vocabulary","note":"jede Einheit baut auf der vorherigen auf","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e2g3wo0","de":"die Aussage","en":"the statement / claim","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e91hxvn","de":"der Wellengang","en":"the wave motion / swell","topic":"Vocabulary","note":"Kitesurf-Kontext","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3egvayqk","de":"den Anschluss verpassen","en":"to miss the connection","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ercszn9","de":"das GepÃ¤ck aufgeben","en":"to check in luggage","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e4rxgat","de":"mit VerspÃ¤tung rechnen","en":"to expect delays","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e0c4bqf","de":"einen kÃ¼hlen Kopf bewahren","en":"to keep a cool head","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ekithhp","de":"aus einer Panne das Beste machen","en":"to make the best of a mishap","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3etafvld","de":"den eigenen Horizont erweitern","en":"to broaden one's own horizons","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3edhe61x","de":"zwischen zwei Lebensmittelpunkten pendeln","en":"to commute between two home bases","topic":"Phrases & Expressions","note":"Mailand/ZÃ¼rich-Kontext","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e0lnizw","de":"sich in fremden Kulturen zu Hause fÃ¼hlen","en":"to feel at home in foreign cultures","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ecvb14u","de":"umbuchen","en":"to rebook / change a booking","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3erj5s2b","de":"die Ausschreibung","en":"call for tenders / job posting","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eodx0j0","de":"die Windeln","en":"diapers / nappies","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e9vnapw","de":"feuerpolizeilich","en":"relating to fire safety regulations","topic":"Vocabulary","note":"feuerpolizeiliche Auflage","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3emo7efs","de":"die Auflage","en":"condition / requirement","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3evkr8gb","de":"das SpÃ¼lmittel","en":"washing-up liquid / dish soap","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3euvdocg","de":"die Tourismusmesse","en":"tourism fair / travel expo","topic":"Travel & Places","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ese5brl","de":"voll ausgelastet sein","en":"to be at full capacity","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ehemyxi","de":"die Auslastung","en":"capacity utilization","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eaiw0ib","de":"die HaushaltsgerÃ¤te","en":"household appliances","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eod018u","de":"die Lebensmittel","en":"food / groceries","topic":"Vocabulary","note":"Plural; kein Singular gebrÃ¤uchlich","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e9ggtoo","de":"hilflos","en":"helpless","topic":"Emotions & Character","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e3gfzy0","de":"Zeit aufwenden fÃ¼r","en":"to invest time on something","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e6c3xlg","de":"klingen / klang / geklungen","en":"to sound / sounded","topic":"Movement & Verbs","note":"unregelmÃ¤ÃŸig","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3edde9bx","de":"prÃ¼fen","en":"to check / examine / test","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e83ib0u","de":"die Erfahrungswerte","en":"benchmarks from experience","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e7ghhe0","de":"die Zustellung","en":"the delivery (postal/courier)","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e9e17ft","de":"du hÃ¤ttest frÃ¼her gebucht","en":"you would have booked earlier [Konj. II Verg.]","topic":"Grammar & Conjugation","note":"hÃ¤tte/wÃ¤re + Partizip II","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3emtguay","de":"ich wÃ¤re lÃ¤nger geblieben","en":"I would have stayed longer [Konj. II Verg.]","topic":"Grammar & Conjugation","note":"bleiben â†’ wÃ¤re + geblieben","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3exq9rup","de":"das Projekt / die Projekte","en":"the project / projects","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3efchvp1","de":"vielleicht","en":"maybe / perhaps","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3efvj1e8","de":"wahrscheinlich","en":"probably / likely","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ee84q7z","de":"das Maximum","en":"the maximum","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ehwdkg3","de":"stemmen (sich gegen)","en":"to resist / push back against","topic":"Vocabulary","note":"die Industrie stemmt sich dagegen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eshrz9z","de":"beanspruchen","en":"to claim / demand / use up","topic":"Vocabulary","note":"Ressourcen beanspruchen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e0ll663","de":"dagegen halten","en":"to counter / push back","topic":"Phrases & Expressions","note":"einem Argument dagegen halten","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3elmx7ut","de":"der Bericht","en":"the report / article","topic":"Vocabulary","note":"einen Bericht verÃ¶ffentlichen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e678s0y","de":"den ganzen Tag","en":"the whole day (Akkusativ)","topic":"Grammar & Conjugation","note":"âš ï¸ Fehlerkorrektur: 'ganzes Tag' â†’ 'den ganzen Tag'","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eycp20w","de":"wÃ¤hrend der Zugfahrt","en":"during the train journey (Genitiv)","topic":"Grammar & Conjugation","note":"âš ï¸ Fehlerkorrektur: 'durch' â†’ 'wÃ¤hrend'","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ei7axut","de":"die Auslieferungsstation","en":"the delivery station / outbound warehouse","topic":"Work & Study","note":"Amazon-Kontext","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ee5p1nz","de":"die Lieferung","en":"the delivery","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e6sv9zz","de":"die Auslieferung","en":"the outbound delivery / dispatching","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ez3bnmh","de":"der Ãœberblick","en":"the overview / big picture","topic":"Vocabulary","note":"den Ãœberblick behalten","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e0du4fz","de":"die Ausnahme","en":"the exception","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3exxnvm9","de":"der Konzern","en":"the corporation / group of companies","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3epf2dg5","de":"das Unternehmen","en":"the company / enterprise","topic":"Work & Study","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3efc3a6g","de":"eifersÃ¼chtig","en":"jealous (romantic)","topic":"Emotions & Character","note":"vs. neidisch = envious of success/things","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eomo2jb","de":"der Ã¶kologische FuÃŸabdruck","en":"the ecological footprint","topic":"Vocabulary","note":"Nachhaltigkeitsthema","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e5zmt09","de":"unverpackt einkaufen","en":"to shop without packaging","topic":"Phrases & Expressions","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3elu7fsi","de":"der Wochenmarkt","en":"the weekly market","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eegygfb","de":"saisonal und regional","en":"seasonal and regional","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eu42mqc","de":"die Alltagsentscheidung","en":"the everyday decision","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ej46dnx","de":"der Konsumstil","en":"the consumption / lifestyle style","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3evddswp","de":"das Gesetz verabschieden","en":"to pass / adopt a law","topic":"Crime & Law","note":"Zustandspassiv: ist verabschiedet","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e79j481","de":"die Emissionsziele festlegen","en":"to set emission targets","topic":"Vocabulary","note":"Zustandspassiv: sind festgelegt","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e4u4bxq","de":"den Vertrag unterzeichnen","en":"to sign the contract","topic":"Work & Study","note":"Zustandspassiv: ist unterzeichnet","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ehpkey9","de":"MaÃŸnahmen umsetzen","en":"to implement measures","topic":"Work & Study","note":"Zustandspassiv: sind umgesetzt","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e7p4yjv","de":"FÃ¶rdermittel genehmigen","en":"to approve funding","topic":"Work & Study","note":"Zustandspassiv: sind genehmigt","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eml3yx5","de":"die Recyclinganlage","en":"the recycling plant","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3eis1fhf","de":"der Windpark","en":"the wind farm","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3elpjleh","de":"die MÃ¼lltrennung","en":"waste separation / sorting","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3e7nde17","de":"der Kohlekraftwerk","en":"the coal power plant","topic":"Vocabulary","note":"stilllegen = to shut down","box":1,"nextReview":"2026-06-12","seen":0},{"id":"19e68a05c3ey4oy45","de":"stillgelegt","en":"decommissioned / shut down","topic":"Vocabulary","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_001","de":"die Bewerbung, -en","en":"application (job)","topic":"Arbeit & Beruf","note":"sich bewerben = to apply","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_002","de":"der Lebenslauf, ´-e","en":"CV, resume","topic":"Arbeit & Beruf","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_003","de":"die Fortbildung, -en","en":"further training","topic":"Arbeit & Beruf","note":"sich fortbilden","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_004","de":"kündigen","en":"to resign / to fire","topic":"Arbeit & Beruf","note":"die Kündigung","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_005","de":"die Gehaltserhöhung, -en","en":"pay raise","topic":"Arbeit & Beruf","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_006","de":"die Überstunden (Pl.)","en":"overtime","topic":"Arbeit & Beruf","note":"Überstunden machen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_007","de":"die Arbeitslosigkeit","en":"unemployment","topic":"Arbeit & Beruf","note":"arbeitslos sein","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_008","de":"der Arbeitgeber, -","en":"employer","topic":"Arbeit & Beruf","note":"Arbeitnehmer = employee","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_009","de":"das Vorstellungsgespräch, -e","en":"job interview","topic":"Arbeit & Beruf","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_010","de":"die Beförderung, -en","en":"promotion","topic":"Arbeit & Beruf","note":"befördert werden","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_011","de":"die Frist, -en","en":"deadline","topic":"Arbeit & Beruf","note":"fristgerecht = on time","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_012","de":"die Teilzeitarbeit","en":"part-time work","topic":"Arbeit & Beruf","note":"Vollzeit = full-time","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_013","de":"die Qualifikation, -en","en":"qualification","topic":"Arbeit & Beruf","note":"qualifiziert","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_014","de":"die Selbstständigkeit","en":"self-employment","topic":"Arbeit & Beruf","note":"selbstständig","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_015","de":"der Klimawandel","en":"climate change","topic":"Umwelt & Nachhaltigkeit","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_016","de":"die erneuerbaren Energien","en":"renewable energies","topic":"Umwelt & Nachhaltigkeit","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_017","de":"der CO2-Ausstoß","en":"CO2 emissions","topic":"Umwelt & Nachhaltigkeit","note":"ausstoßen = to emit","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_018","de":"die Mülltrennung","en":"waste separation","topic":"Umwelt & Nachhaltigkeit","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_019","de":"umweltfreundlich","en":"environmentally friendly","topic":"Umwelt & Nachhaltigkeit","note":"umweltschädlich = harmful","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_020","de":"die Nachhaltigkeit","en":"sustainability","topic":"Umwelt & Nachhaltigkeit","note":"nachhaltig","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_021","de":"der Verbrauch","en":"consumption","topic":"Umwelt & Nachhaltigkeit","note":"verbrauchen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_022","de":"die Verschmutzung","en":"pollution","topic":"Umwelt & Nachhaltigkeit","note":"verschmutzen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_023","de":"der Treibhauseffekt","en":"greenhouse effect","topic":"Umwelt & Nachhaltigkeit","note":"Treibhausgas","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_024","de":"die Energiewende","en":"energy transition","topic":"Umwelt & Nachhaltigkeit","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_025","de":"der ökologische Fußabdruck","en":"ecological footprint","topic":"Umwelt & Nachhaltigkeit","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_026","de":"die Abholzung","en":"deforestation","topic":"Umwelt & Nachhaltigkeit","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_027","de":"die sozialen Medien","en":"social media","topic":"Medien & Digitalisierung","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_028","de":"die Berichterstattung","en":"reporting, coverage","topic":"Medien & Digitalisierung","note":"berichten","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_029","de":"die Meinungsfreiheit","en":"freedom of speech","topic":"Medien & Digitalisierung","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_030","de":"der Datenschutz","en":"data protection","topic":"Medien & Digitalisierung","note":"DSGVO","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_031","de":"die Falschmeldung, -en","en":"fake news","topic":"Medien & Digitalisierung","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_032","de":"die Künstliche Intelligenz (KI)","en":"artificial intelligence (AI)","topic":"Medien & Digitalisierung","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_033","de":"veröffentlichen","en":"to publish","topic":"Medien & Digitalisierung","note":"die Veröffentlichung","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_034","de":"die Quelle, -n","en":"source","topic":"Medien & Digitalisierung","note":"zuverlässige Quelle","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_035","de":"der Einfluss, ´-e","en":"influence","topic":"Medien & Digitalisierung","note":"beeinflussen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_036","de":"die Abhängigkeit","en":"dependency, addiction","topic":"Medien & Digitalisierung","note":"abhängig von","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_037","de":"die Öffentlichkeit","en":"the public","topic":"Medien & Digitalisierung","note":"in der Öffentlichkeit","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_038","de":"die Schlagzeile, -n","en":"headline","topic":"Medien & Digitalisierung","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_039","de":"die Vorsorge","en":"prevention, check-up","topic":"Gesundheit","note":"Vorsorgeuntersuchung","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_040","de":"die Nebenwirkung, -en","en":"side effect","topic":"Gesundheit","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_041","de":"die Behandlung, -en","en":"treatment","topic":"Gesundheit","note":"behandeln","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_042","de":"das Wohlbefinden","en":"well-being","topic":"Gesundheit","note":"sich wohlfühlen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_043","de":"die Ernährung","en":"nutrition, diet","topic":"Gesundheit","note":"sich ernähren","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_044","de":"die psychische Gesundheit","en":"mental health","topic":"Gesundheit","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_045","de":"die Belastung, -en","en":"strain, stress","topic":"Gesundheit","note":"belastend","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_046","de":"die Krankenversicherung","en":"health insurance","topic":"Gesundheit","note":"gesetzlich/privat","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_047","de":"sich erholen","en":"to recover, relax","topic":"Gesundheit","note":"die Erholung","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_048","de":"das Burnout","en":"burnout","topic":"Gesundheit","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_049","de":"die Impfung, -en","en":"vaccination","topic":"Gesundheit","note":"sich impfen lassen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_050","de":"die Therapie, -n","en":"therapy","topic":"Gesundheit","note":"therapeutisch","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_051","de":"die Ausbildung","en":"vocational training","topic":"Bildung & Lernen","note":"Auszubildende","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_052","de":"das Studium","en":"university studies","topic":"Bildung & Lernen","note":"studieren","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_053","de":"die Weiterbildung","en":"continuing education","topic":"Bildung & Lernen","note":"sich weiterbilden","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_054","de":"der Abschluss, ´-e","en":"degree, graduation","topic":"Bildung & Lernen","note":"einen Abschluss machen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_055","de":"die Kenntnisse (Pl.)","en":"knowledge, skills","topic":"Bildung & Lernen","note":"Vorkenntnisse","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_056","de":"das Stipendium, -ien","en":"scholarship","topic":"Bildung & Lernen","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_057","de":"die Fähigkeit, -en","en":"ability, skill","topic":"Bildung & Lernen","note":"fähig","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_058","de":"der Anspruch, ´-e","en":"claim, standard","topic":"Bildung & Lernen","note":"anspruchsvoll = demanding","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_059","de":"die Gleichberechtigung","en":"equal rights","topic":"Gesellschaft","note":"gleichberechtigt","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_060","de":"die Diskriminierung","en":"discrimination","topic":"Gesellschaft","note":"diskriminieren","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_061","de":"das Vorurteil, -e","en":"prejudice","topic":"Gesellschaft","note":"vorurteilsfrei","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_062","de":"die Vielfalt","en":"diversity","topic":"Gesellschaft","note":"vielfältig","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_063","de":"ehrenamtlich","en":"voluntary (unpaid)","topic":"Gesellschaft","note":"das Ehrenamt","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_064","de":"sich engagieren","en":"to get involved","topic":"Gesellschaft","note":"das Engagement","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_065","de":"die Zuwanderung","en":"immigration","topic":"Gesellschaft","note":"zuwandern","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_066","de":"benachteiligen","en":"to disadvantage","topic":"Gesellschaft","note":"die Benachteiligung","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_067","de":"der Zusammenhalt","en":"cohesion, solidarity","topic":"Gesellschaft","note":"zusammenhalten","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_068","de":"die Gerechtigkeit","en":"justice, fairness","topic":"Gesellschaft","note":"gerecht","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_069","de":"die Mieterhöhung, -en","en":"rent increase","topic":"Wohnen & Stadt","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_070","de":"die Wohngemeinschaft (WG)","en":"shared apartment","topic":"Wohnen & Stadt","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_071","de":"die Nebenkosten (Pl.)","en":"utility costs","topic":"Wohnen & Stadt","note":"Warmmiete/Kaltmiete","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_072","de":"der öffentliche Nahverkehr","en":"public transport","topic":"Wohnen & Stadt","note":"ÖPNV","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_073","de":"die Lebensqualität","en":"quality of life","topic":"Wohnen & Stadt","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_074","de":"die Gentrifizierung","en":"gentrification","topic":"Wohnen & Stadt","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_075","de":"der Wohnungsmangel","en":"housing shortage","topic":"Wohnen & Stadt","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_076","de":"die Werbung","en":"advertising","topic":"Konsum & Wirtschaft","note":"werben","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_077","de":"der Verbraucher, -","en":"consumer","topic":"Konsum & Wirtschaft","note":"Verbraucherschutz","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_078","de":"die Reklamation, -en","en":"complaint (product)","topic":"Konsum & Wirtschaft","note":"reklamieren","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_079","de":"umtauschen","en":"to exchange (product)","topic":"Konsum & Wirtschaft","note":"der Umtausch","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_080","de":"die Garantie","en":"warranty","topic":"Konsum & Wirtschaft","note":"Gewährleistung","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_081","de":"die Inflation","en":"inflation","topic":"Konsum & Wirtschaft","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_082","de":"nachhaltig konsumieren","en":"to consume sustainably","topic":"Konsum & Wirtschaft","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_083","de":"die Unterkunft, ´-e","en":"accommodation","topic":"Reisen & Mobilität","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_084","de":"die Verspätung, -en","en":"delay","topic":"Reisen & Mobilität","note":"sich verspäten","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_085","de":"die Entschädigung, -en","en":"compensation","topic":"Reisen & Mobilität","note":"entschädigen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_086","de":"den Anschluss verpassen","en":"to miss the connection","topic":"Reisen & Mobilität","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_087","de":"die Sehenswürdigkeit, -en","en":"sight, attraction","topic":"Reisen & Mobilität","note":"sehenswert","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_088","de":"die Demokratie","en":"democracy","topic":"Politik & Recht","note":"demokratisch","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_089","de":"das Grundrecht, -e","en":"fundamental right","topic":"Politik & Recht","note":"Grundgesetz","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_090","de":"die Abstimmung, -en","en":"vote, ballot","topic":"Politik & Recht","note":"abstimmen","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_091","de":"der Rechtsstaat","en":"rule of law","topic":"Politik & Recht","note":"rechtsstaatlich","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_092","de":"die Menschenrechte (Pl.)","en":"human rights","topic":"Politik & Recht","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_093","de":"meiner Meinung nach","en":"in my opinion","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_094","de":"ich bin der Auffassung, dass...","en":"I am of the opinion that...","topic":"B2 Redemittel","note":"formal","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_095","de":"einerseits... andererseits","en":"on one hand... on the other","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_096","de":"darüber hinaus","en":"furthermore, moreover","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_097","de":"im Vergleich zu (+Dat.)","en":"compared to","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_098","de":"zusammenfassend lässt sich sagen","en":"to summarise one can say","topic":"B2 Redemittel","note":"conclusion","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_099","de":"es ist unbestritten, dass...","en":"it is undeniable that...","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_100","de":"aus meiner Sicht","en":"from my perspective","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_101","de":"es liegt auf der Hand, dass...","en":"it is obvious that...","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_102","de":"was ... betrifft / angeht","en":"as far as ... is concerned","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_103","de":"im Hinblick auf (+Akk.)","en":"with regard to","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_104","de":"infolgedessen","en":"as a result, consequently","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_105","de":"dennoch / nichtsdestotrotz","en":"nevertheless, nonetheless","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_106","de":"angesichts (+Gen.)","en":"in view of, given","topic":"B2 Redemittel","note":"angesichts der Lage","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_107","de":"aufgrund (+Gen.)","en":"due to, because of","topic":"B2 Redemittel","note":"aufgrund des Wetters","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_108","de":"laut (+Dat./Gen.)","en":"according to","topic":"B2 Redemittel","note":"laut einer Studie","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_109","de":"ich möchte darauf hinweisen, dass...","en":"I would like to point out that...","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_110","de":"abschließend möchte ich betonen","en":"in conclusion I emphasise","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_111","de":"es handelt sich um (+Akk.)","en":"it is about, it concerns","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_112","de":"im Gegensatz zu (+Dat.)","en":"in contrast to","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_113","de":"soweit ich weiß","en":"as far as I know","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_114","de":"es steht fest, dass...","en":"it is certain that...","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0},{"id":"b2_115","de":"unter der Voraussetzung, dass...","en":"on the condition that...","topic":"B2 Redemittel","note":"","box":1,"nextReview":"2026-06-12","seen":0}];
 
-let APP = loadData();
+// Gap-fill sentences for vocabulary practice
+const GAP_SENTENCES = [
+  // Arbeit & Beruf
+  {de:"Ich habe meine ___ bei drei Firmen eingereicht.",word:"Bewerbung",en:"application",opts:["Bewerbung","Behandlung","Berichterstattung","Beförderung"]},
+  {de:"Nach dem ___ hat sie die Stelle sofort bekommen.",word:"Vorstellungsgespräch",en:"job interview",opts:["Vorstellungsgespräch","Vorurteil","Verbrauch","Verhalten"]},
+  {de:"Er hat nach 10 Jahren eine ___ bekommen.",word:"Beförderung",en:"promotion",opts:["Beförderung","Bewerbung","Belastung","Behandlung"]},
+  {de:"Die ___ in Deutschland ist auf 5% gesunken.",word:"Arbeitslosigkeit",en:"unemployment",opts:["Arbeitslosigkeit","Abhängigkeit","Abholzung","Abstimmung"]},
+  {de:"Sie arbeitet in ___, weil sie ein kleines Kind hat.",word:"Teilzeitarbeit",en:"part-time work",opts:["Teilzeitarbeit","Therapie","Trennung","Technik"]},
+  {de:"Die ___ für das Projekt ist nächsten Freitag.",word:"Frist",en:"deadline",opts:["Frist","Fortbildung","Forschung","Fähigkeit"]},
+  // Umwelt
+  {de:"Der ___ ist die größte Herausforderung unserer Zeit.",word:"Klimawandel",en:"climate change",opts:["Klimawandel","Konsum","Konflikt","Kompromiss"]},
+  {de:"Wir müssen mehr ___ nutzen, um CO2 zu reduzieren.",word:"erneuerbare Energien",en:"renewable energies",opts:["erneuerbare Energien","elektronische Medien","effektive Methoden","ehrliche Menschen"]},
+  {de:"Die ___ der Ozeane nimmt jedes Jahr zu.",word:"Verschmutzung",en:"pollution",opts:["Verschmutzung","Verspätung","Versicherung","Versammlung"]},
+  {de:"In Deutschland ist ___ sehr wichtig — Papier, Plastik, Glas.",word:"Mülltrennung",en:"waste separation",opts:["Mülltrennung","Meinungsfreiheit","Mobilität","Motivation"]},
+  {de:"___ Produkte sind oft teurer, aber besser für die Umwelt.",word:"Nachhaltige",en:"Sustainable",opts:["Nachhaltige","Natürliche","Notwendige","Niedrige"]},
+  // Medien
+  {de:"Die ___ in den Nachrichten war nicht objektiv.",word:"Berichterstattung",en:"reporting",opts:["Berichterstattung","Behandlung","Bewerbung","Bestätigung"]},
+  {de:"___ im Internet zu erkennen ist heute schwieriger denn je.",word:"Falschmeldungen",en:"fake news",opts:["Falschmeldungen","Fortbildungen","Forschungen","Fähigkeiten"]},
+  {de:"Der ___ persönlicher Daten muss besser geregelt werden.",word:"Datenschutz",en:"data protection",opts:["Datenschutz","Durchschnitt","Druckmittel","Diebstahl"]},
+  // Gesundheit
+  {de:"Die ___ dieses Medikaments können Kopfschmerzen sein.",word:"Nebenwirkungen",en:"side effects",opts:["Nebenwirkungen","Nachrichten","Nebenkosten","Netzwerke"]},
+  {de:"Eine gesunde ___ ist wichtig für das Wohlbefinden.",word:"Ernährung",en:"nutrition",opts:["Ernährung","Erholung","Erfahrung","Entwicklung"]},
+  {de:"Viele Menschen leiden unter ___ im Beruf.",word:"Burnout",en:"burnout",opts:["Burnout","Behandlung","Bildung","Bewegung"]},
+  {de:"Man sollte regelmäßig zur ___ gehen.",word:"Vorsorge",en:"check-up",opts:["Vorsorge","Versicherung","Verspätung","Verfügung"]},
+  // Gesellschaft
+  {de:"___ bedeutet, dass alle Menschen die gleichen Rechte haben.",word:"Gleichberechtigung",en:"equal rights",opts:["Gleichberechtigung","Gentrifizierung","Globalisierung","Gerechtigkeit"]},
+  {de:"Wir sollten ___ abbauen und offen für andere Kulturen sein.",word:"Vorurteile",en:"prejudices",opts:["Vorurteile","Verträge","Verbindungen","Voraussetzungen"]},
+  {de:"Er arbeitet ___ im Tierheim — ohne Bezahlung.",word:"ehrenamtlich",en:"voluntarily",opts:["ehrenamtlich","ehrlich","effektiv","endgültig"]},
+  // Wohnen
+  {de:"Die ___ in München sind extrem hoch.",word:"Nebenkosten",en:"utility costs",opts:["Nebenkosten","Nebenwirkungen","Nachrichten","Netzwerke"]},
+  {de:"Viele Studenten wohnen in einer ___.",word:"WG",en:"shared apartment",opts:["WG","Werbung","Weiterbildung","Wirtschaft"]},
+  // Redemittel
+  {de:"___ lässt sich sagen, dass die Vorteile überwiegen.",word:"Zusammenfassend",en:"To summarise",opts:["Zusammenfassend","Zweifellos","Zunehmend","Zufällig"]},
+  {de:"___ halte ich diese Lösung für die beste.",word:"Aus meiner Sicht",en:"From my perspective",opts:["Aus meiner Sicht","Auf jeden Fall","Außer Zweifel","Am Ende"]},
+  {de:"___ des Klimawandels müssen wir jetzt handeln.",word:"Angesichts",en:"In view of",opts:["Angesichts","Aufgrund","Anstatt","Außerhalb"]},
+  // Bildung
+  {de:"Nach dem ___ hat sie sofort einen Job gefunden.",word:"Abschluss",en:"degree",opts:["Abschluss","Anfang","Anspruch","Auftrag"]},
+  {de:"Für diese Stelle braucht man gute Deutsch___.",word:"kenntnisse",en:"knowledge",opts:["kenntnisse","kurse","klassen","kreise"]},
+  // Konsum
+  {de:"Ich möchte das Produkt ___, weil es defekt ist.",word:"umtauschen",en:"to exchange",opts:["umtauschen","untersuchen","überlegen","unterscheiden"]},
+  {de:"Die ___ schützt den Käufer zwei Jahre lang.",word:"Garantie",en:"warranty",opts:["Garantie","Gerechtigkeit","Gleichberechtigung","Gesellschaft"]},
+  // Reisen
+  {de:"Wegen der ___ habe ich meinen Anschlussflug verpasst.",word:"Verspätung",en:"delay",opts:["Verspätung","Verschmutzung","Versicherung","Vorsorge"]},
+  {de:"Ich fordere eine ___ für die Unannehmlichkeiten.",word:"Entschädigung",en:"compensation",opts:["Entschädigung","Entwicklung","Erfahrung","Ernährung"]}
+];
 
-// Merge grammar if not already there
-if (!APP.grammar || APP.grammar.length === 0) {
-  APP.grammar = B2_GRAMMAR;
+// Grammar exercises (interactive drills)
+const GRAMMAR_EXERCISES = [
+  // Konjunktiv II Gegenwart
+  {rule:'konjII',q:'Wenn ich reich ___ (sein), würde ich um die Welt reisen.',answer:'wäre',opts:['wäre','würde','hätte','sei']},
+  {rule:'konjII',q:'An deiner Stelle ___ ich zum Arzt gehen. (werden)',answer:'würde',opts:['würde','wäre','hätte','werde']},
+  {rule:'konjII',q:'Wenn er mehr Zeit ___ (haben), könnte er Sport machen.',answer:'hätte',opts:['hätte','wäre','würde','habe']},
+  {rule:'konjII',q:'___ Sie bitte das Fenster öffnen? (können)',answer:'Könnten',opts:['Könnten','Können','Konnten','Würden']},
+  {rule:'konjII',q:'Ich wünschte, es ___ nicht so kalt. (sein)',answer:'wäre',opts:['wäre','ist','würde','sei']},
+  // Konjunktiv II Vergangenheit
+  {rule:'konjIIpast',q:'Wenn ich das ___ (wissen), hätte ich anders reagiert.',answer:'gewusst hätte',opts:['gewusst hätte','wusste','wissen würde','gewusst habe']},
+  {rule:'konjIIpast',q:'Sie ___ gern mitgekommen, aber sie hatte keine Zeit. (sein)',answer:'wäre',opts:['wäre','hätte','würde','ist']},
+  {rule:'konjIIpast',q:'Er hätte den Zug nicht ___, wenn er früher losgefahren ___.',answer:'verpasst / wäre',opts:['verpasst / wäre','verpasst / hätte','verpassen / wäre','verpasst / ist']},
+  // Konjunktiv I (Indirekte Rede)
+  {rule:'konjI',q:'Der Sprecher sagte, die Situation ___ schwierig. (sein)',answer:'sei',opts:['sei','ist','wäre','wird']},
+  {rule:'konjI',q:'Sie meinte, sie ___ keine Zeit. (haben)',answer:'habe',opts:['habe','hat','hätte','hatte']},
+  {rule:'konjI',q:'Er behauptete, er ___ davon nichts. (wissen)',answer:'wisse',opts:['wisse','weiß','wüsste','wusste']},
+  // Passiv
+  {rule:'passivV',q:'Das neue Gebäude ___ gerade ___. (bauen, Vorgangspassiv)',answer:'wird ... gebaut',opts:['wird ... gebaut','ist ... gebaut','wurde ... gebaut','hat ... gebaut']},
+  {rule:'passivV',q:'Die E-Mail ___ gestern ___. (schicken, Präteritum Passiv)',answer:'wurde ... geschickt',opts:['wurde ... geschickt','wird ... geschickt','ist ... geschickt','war ... geschickt']},
+  {rule:'passivZ',q:'Die Tür ___ schon ___. (öffnen, Zustandspassiv)',answer:'ist ... geöffnet',opts:['ist ... geöffnet','wird ... geöffnet','wurde ... geöffnet','hat ... geöffnet']},
+  {rule:'passivZ',q:'Das Problem ___ bereits ___. (lösen, Zustandspassiv)',answer:'ist ... gelöst',opts:['ist ... gelöst','wird ... gelöst','wurde ... gelöst','hat ... gelöst']},
+  // Relativsätze
+  {rule:'relativ',q:'Das ist der Kollege, ___ ___ ich das Projekt gemacht habe.',answer:'mit dem',opts:['mit dem','mit der','mit den','mit dessen']},
+  {rule:'relativ',q:'Die Stadt, ___ ___ ich wohne, ist sehr schön.',answer:'in der',opts:['in der','in die','in dem','in den']},
+  {rule:'relativ',q:'Das Buch, ___ ___ wir gesprochen haben, ist vergriffen.',answer:'über das',opts:['über das','über dem','über den','über die']},
+  // Konnektoren
+  {rule:'konnektoren',q:'___ sie krank war, ___ ging sie trotzdem zur Arbeit.',answer:'Zwar ... aber',opts:['Zwar ... aber','Sowohl ... als auch','Weder ... noch','Entweder ... oder']},
+  {rule:'konnektoren',q:'___ mehr ich lerne, ___ besser verstehe ich die Grammatik.',answer:'Je ... desto',opts:['Je ... desto','Sowohl ... als auch','Nicht nur ... sondern auch','Weder ... noch']},
+  {rule:'konnektoren',q:'Er spricht ___ Deutsch ___ Englisch fließend.',answer:'sowohl ... als auch',opts:['sowohl ... als auch','weder ... noch','entweder ... oder','zwar ... aber']},
+  // Nominalisierung
+  {rule:'nominal',q:'entscheiden → die ___',answer:'Entscheidung',opts:['Entscheidung','Entscheidigkeit','Entschiedenheit','Entscheidnis']},
+  {rule:'nominal',q:'sich bewerben → die ___',answer:'Bewerbung',opts:['Bewerbung','Bewerbigkeit','Bewerbenheit','Bewerbnis']},
+  {rule:'nominal',q:'Obwohl es regnete → Trotz ___',answer:'des Regens',opts:['des Regens','dem Regen','den Regen','der Regen']},
+  // Partizip als Adjektiv
+  {rule:'partizip',q:'ein Auto, das fährt → ein ___ Auto (Partizip I)',answer:'fahrendes',opts:['fahrendes','gefahrenes','fahrenes','gefahrendes']},
+  {rule:'partizip',q:'ein Brief, der geschrieben wurde → ein ___ Brief (Part. II)',answer:'geschriebener',opts:['geschriebener','schreibender','geschriebter','schreibener']},
+  // Temporalsätze
+  {rule:'temporal',q:'___ ich gegessen hatte, ging ich spazieren.',answer:'Nachdem',opts:['Nachdem','Bevor','Seit','Während']},
+  {rule:'temporal',q:'___ ich in Berlin wohne, habe ich viele Freunde gefunden.',answer:'Seit/Seitdem',opts:['Seit/Seitdem','Nachdem','Bevor','Bis']},
+  {rule:'temporal',q:'___ du gehst, ruf mich bitte an.',answer:'Bevor',opts:['Bevor','Nachdem','Seit','Während']},
+  // Genitiv-Präpositionen
+  {rule:'genitiv',q:'___ des schlechten Wetters gingen wir spazieren.',answer:'Trotz',opts:['Trotz','Wegen','Während','Statt']},
+  {rule:'genitiv',q:'___ der Verspätung verpasste sie den Anschluss.',answer:'Wegen',opts:['Wegen','Trotz','Statt','Während']},
+  {rule:'genitiv',q:'___ des Unterrichts darf man nicht telefonieren.',answer:'Während',opts:['Während','Wegen','Trotz','Statt']},
+  // Subjektive Modalverben
+  {rule:'modal',q:'Er ___ krank sein — er sieht sehr blass aus. (95% sicher)',answer:'muss',opts:['muss','dürfte','könnte','soll']},
+  {rule:'modal',q:'Sie ___ schon zu Hause sein — ihr Auto steht da. (80%)',answer:'dürfte',opts:['dürfte','muss','könnte','soll']},
+  {rule:'modal',q:'Er ___ sehr reich sein — das sagen zumindest alle. (Gerücht)',answer:'soll',opts:['soll','muss','will','dürfte']},
+  {rule:'modal',q:'Sie ___ das selbst gesehen haben. (sie behauptet es)',answer:'will',opts:['will','soll','muss','dürfte']}
+];
+
+// Preload merge logic
+let APP=loadData();
+if (APP.words.length === 0 && PRELOAD_WORDS.length > 0) {
+  APP.words = PRELOAD_WORDS;
   saveData(APP);
-} else if (APP.grammar.length < B2_GRAMMAR.length) {
-  const existingIds = APP.grammar.map(g=>g.id);
-  B2_GRAMMAR.forEach(g => { if (!existingIds.includes(g.id)) APP.grammar.push(g); });
-  saveData(APP);
 }
 
-// ===== LEITNER SYSTEM =====
-function getDueCards() {
-  const today = new Date().toISOString().slice(0,10);
-  return APP.words.filter(w => {
-    if (!w.box) w.box = 1;
-    if (!w.nextReview) w.nextReview = today;
-    return w.nextReview <= today;
-  });
-}
+if(!APP.grammar||APP.grammar.length===0){APP.grammar=B2_GRAMMAR;saveData(APP)}
+else if(APP.grammar.length<B2_GRAMMAR.length){const ids=APP.grammar.map(g=>g.id);B2_GRAMMAR.forEach(g=>{if(!ids.includes(g.id))APP.grammar.push(g)});saveData(APP)}
 
-function getNextReviewDate(box) {
-  const days = [0, 1, 2, 4, 7, 30]; // box 1=daily, 2=2days, 3=4days, 4=weekly, 5=monthly
-  const d = new Date();
-  d.setDate(d.getDate() + (days[box] || 1));
-  return d.toISOString().slice(0,10);
-}
-
-function promoteCard(word, correct) {
-  if (!word.box) word.box = 1;
-  if (correct) {
-    word.box = Math.min(word.box + 1, 5);
-  } else {
-    word.box = 1;
-  }
-  word.nextReview = getNextReviewDate(word.box);
-  word.seen = (word.seen || 0) + 1;
-  saveData(APP);
-}
+// ===== LEITNER =====
+function getDueCards(){const t=new Date().toISOString().slice(0,10);return APP.words.filter(w=>{if(!w.box)w.box=1;if(!w.nextReview)w.nextReview=t;return w.nextReview<=t})}
+function getNextReview(box){const days=[0,1,2,4,7,30];const d=new Date();d.setDate(d.getDate()+(days[box]||1));return d.toISOString().slice(0,10)}
+function promoteCard(w,ok){if(!w.box)w.box=1;w.box=ok?Math.min(w.box+1,5):1;w.nextReview=getNextReview(w.box);w.seen=(w.seen||0)+1;saveData(APP)}
 
 // ===== STREAK =====
-function updateStreak() {
-  const today = new Date().toISOString().slice(0,10);
-  if (APP.stats.lastDate === today) return;
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate()-1);
-  const yStr = yesterday.toISOString().slice(0,10);
-  if (APP.stats.lastDate === yStr) {
-    APP.stats.streak++;
-  } else if (APP.stats.lastDate !== today) {
-    APP.stats.streak = 1;
-  }
-  APP.stats.lastDate = today;
-  saveData(APP);
+function updateStreak(){const t=new Date().toISOString().slice(0,10);if(APP.stats.lastDate===t)return;const y=new Date();y.setDate(y.getDate()-1);APP.stats.streak=(APP.stats.lastDate===y.toISOString().slice(0,10))?APP.stats.streak+1:1;APP.stats.lastDate=t;saveData(APP);document.getElementById('streakDisplay').textContent='🔥 '+APP.stats.streak}
+
+// ===== NAV =====
+let currentPage='heute';
+function switchPage(name,btn){
+  if(name===currentPage)return;
+  const cur=document.getElementById('page-'+currentPage);
+  const nxt=document.getElementById('page-'+name);
+  cur.classList.remove('active');
+  cur.classList.add('exit-left');
+  setTimeout(()=>cur.classList.remove('exit-left'),300);
+  nxt.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  currentPage=name;
+  if(name==='karten')initFlashcards();
+  if(name==='wortschatz')renderWordList();
+  if(name==='grammatik')renderGrammar();
+  if(name==='fortschritt')renderStats();
+  if(name==='schreiben'&&!document.getElementById('promptText').textContent)newPrompt();
+  if(name==='uebungen')startExercise('gap');
 }
 
-// ===== NAVIGATION =====
-function switchPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('.navbar button').forEach(b => b.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-  if (name === 'karten') initFlashcards();
-  if (name === 'wortschatz') renderWordList();
-  if (name === 'grammatik') renderGrammar();
-  if (name === 'fortschritt') renderStats();
-  if (name === 'schreiben') { if(!document.getElementById('promptText').textContent) newPrompt(); }
+// ===== HEUTE =====
+function initToday(){
+  const t=new Date();
+  document.getElementById('todayDate').textContent=t.toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});
+  const due=getDueCards();
+  document.getElementById('dueCount').textContent=due.length+' fällig';
+  const ts=t.toISOString().slice(0,10);
+  if(APP.stats.lastLessonDate!==ts){APP.stats.lessonSteps=[false,false,false,false];APP.stats.lastLessonDate=ts;saveData(APP)}
+  updateLessonSteps();renderLeitnerBoxes('leitnerDisplay');
 }
-
-// ===== HEUTE (Daily Lesson) =====
-function initToday() {
-  const today = new Date();
-  const opts = {weekday:'long', day:'numeric', month:'long', year:'numeric'};
-  document.getElementById('todayDate').textContent = today.toLocaleDateString('de-DE', opts);
-  
-  const due = getDueCards();
-  document.getElementById('dueCount').textContent = due.length + ' fällig';
-  
-  // Reset lesson steps if new day
-  const todayStr = today.toISOString().slice(0,10);
-  if (APP.stats.lastLessonDate !== todayStr) {
-    APP.stats.lessonSteps = [false,false,false,false];
-    APP.stats.lastLessonDate = todayStr;
-    saveData(APP);
-  }
-  
-  updateLessonSteps();
-  renderLeitnerBoxes('leitnerDisplay');
+function updateLessonSteps(){
+  const s=APP.stats.lessonSteps||[false,false,false,false];
+  const done=s.filter(Boolean).length;
+  document.getElementById('lessonProgress').style.width=(done/4*100)+'%';
+  document.getElementById('lessonProgressText').textContent=done+' / 4 Schritte';
+  for(let i=1;i<=4;i++){const el=document.getElementById('step'+i);el.classList.remove('done','active-step');if(s[i-1])el.classList.add('done');else if(i===done+1)el.classList.add('active-step')}
 }
-
-function updateLessonSteps() {
-  const steps = APP.stats.lessonSteps || [false,false,false,false];
-  const done = steps.filter(Boolean).length;
-  document.getElementById('lessonProgress').style.width = (done/4*100)+'%';
-  document.getElementById('lessonProgressText').textContent = done + ' / 4 Schritte';
-  
-  for (let i=1;i<=4;i++) {
-    const el = document.getElementById('step'+i);
-    el.classList.remove('done','active-step');
-    if (steps[i-1]) el.classList.add('done');
-    else if (i === done+1) el.classList.add('active-step');
-  }
+function startLessonStep(n){
+  const navBtns=document.querySelectorAll('.nav-btn');
+  if(n===1){switchPage('karten',navBtns[3]);initFlashcards()}else if(n===3){switchPage('uebungen',navBtns[4]);startExercise('gap')}
+  else if(n===2){switchPage('grammatik',navBtns[2])}
+  else if(n===4){switchPage('schreiben',navBtns[4]);newPrompt()}
 }
-
-function startLessonStep(n) {
-  if (n===1) { switchPageDirect('karten'); initFlashcards(); }
-  else if (n===2) { switchPageDirect('grammatik'); }
-  else if (n===3) { switchPageDirect('karten'); initFlashcards(); }
-  else if (n===4) { switchPageDirect('schreiben'); newPrompt(); }
-}
-
-function switchPageDirect(name) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('.navbar button').forEach(b=>{
-    b.classList.remove('active');
-    if(b.textContent.toLowerCase().includes(name.slice(0,4))) b.classList.add('active');
-  });
-}
-
-function completeLessonStep(n) {
-  if (!APP.stats.lessonSteps) APP.stats.lessonSteps = [false,false,false,false];
-  APP.stats.lessonSteps[n-1] = true;
-  saveData(APP);
-  updateLessonSteps();
-  updateStreak();
-}
+function completeLessonStep(n){if(!APP.stats.lessonSteps)APP.stats.lessonSteps=[false,false,false,false];APP.stats.lessonSteps[n-1]=true;saveData(APP);updateLessonSteps();updateStreak()}
 
 // ===== FLASHCARDS =====
-let currentDue = [];
-let currentCardIdx = 0;
-
-function initFlashcards() {
-  currentDue = getDueCards();
-  currentCardIdx = 0;
-  document.getElementById('cardsDue').textContent = currentDue.length + ' fällig';
-  if (currentDue.length === 0) {
-    document.getElementById('flashcardArea').style.display='none';
-    document.getElementById('flashcardEmpty').style.display='block';
-  } else {
-    document.getElementById('flashcardArea').style.display='block';
-    document.getElementById('flashcardEmpty').style.display='none';
-    showCard();
-  }
+let currentDue=[],cardIdx=0;
+function initFlashcards(){
+  currentDue=getDueCards();cardIdx=0;
+  document.getElementById('cardsDue').textContent=currentDue.length;
+  if(currentDue.length===0){document.getElementById('flashcardArea').style.display='none';document.getElementById('flashcardEmpty').style.display='block'}
+  else{document.getElementById('flashcardArea').style.display='block';document.getElementById('flashcardEmpty').style.display='none';showCard()}
 }
-
-function showCard() {
-  if (currentCardIdx >= currentDue.length) {
-    document.getElementById('flashcardArea').style.display='none';
-    document.getElementById('flashcardEmpty').style.display='block';
-    completeLessonStep(1);
-    return;
-  }
-  const w = currentDue[currentCardIdx];
-  document.getElementById('fcFront').textContent = w.de;
-  document.getElementById('fcTopic').textContent = w.topic || '';
-  document.getElementById('fcBack').textContent = w.en;
-  document.getElementById('fcBox').textContent = 'Box ' + (w.box||1);
+function showCard(){
+  if(cardIdx>=currentDue.length){document.getElementById('flashcardArea').style.display='none';document.getElementById('flashcardEmpty').style.display='block';completeLessonStep(1);return}
+  const w=currentDue[cardIdx];
+  document.getElementById('fcFront').textContent=w.de;
+  document.getElementById('fcTopic').textContent=w.topic||'';
+  document.getElementById('fcBack').textContent=w.en;
+  document.getElementById('fcBox').textContent='Box '+(w.box||1);
   document.getElementById('flashcard').classList.remove('flipped');
-  document.getElementById('cardProgress').textContent = (currentCardIdx+1)+' / '+currentDue.length;
+  document.getElementById('cardProgress').textContent=(cardIdx+1)+' / '+currentDue.length;
 }
-
-function flipCard() {
-  document.getElementById('flashcard').classList.toggle('flipped');
-}
-
-function cardAnswer(correct) {
-  const w = currentDue[currentCardIdx];
-  promoteCard(w, correct);
-  APP.stats.total++;
-  if (correct) APP.stats.correct++;
-  saveData(APP);
-  currentCardIdx++;
-  showCard();
-}
+function flipCard(){document.getElementById('flashcard').classList.toggle('flipped')}
+function cardAnswer(ok){const w=currentDue[cardIdx];promoteCard(w,ok);APP.stats.total++;if(ok)APP.stats.correct++;saveData(APP);cardIdx++;showCard()}
 
 // ===== WORTSCHATZ =====
-function renderWordList() {
-  const search = (document.getElementById('wordSearch').value||'').toLowerCase();
-  const filtered = APP.words.filter(w => 
-    w.de.toLowerCase().includes(search) || 
-    w.en.toLowerCase().includes(search) ||
-    (w.topic||'').toLowerCase().includes(search)
-  );
-  const html = filtered.slice(0,50).map(w => 
-    `<div class="word-list-item" onclick="editWord('${w.id}')">
-      <div><div class="de">${w.de}</div><div class="en">${w.en}</div></div>
-      <span class="tag">${w.topic||'—'}</span>
-    </div>`
-  ).join('');
-  document.getElementById('wordList').innerHTML = html || '<div class="empty-state"><span class="emoji">📚</span><p>Keine Wörter gefunden</p></div>';
-  document.getElementById('wordCount').textContent = APP.words.length + ' Wörter gesamt';
-  
-  // Update datalist
-  const topics = [...new Set(APP.words.map(w=>w.topic).filter(Boolean))];
-  document.getElementById('topicList').innerHTML = topics.map(t=>`<option value="${t}">`).join('');
+function renderWordList(){
+  const s=(document.getElementById('wordSearch').value||'').toLowerCase();
+  const f=APP.words.filter(w=>w.de.toLowerCase().includes(s)||w.en.toLowerCase().includes(s)||(w.topic||'').toLowerCase().includes(s));
+  document.getElementById('wordList').innerHTML=f.slice(0,50).map(w=>`<div class="word-list-item" onclick="editWord('${w.id}')"><div><div class="de">${w.de}</div><div class="en">${w.en}</div></div><span class="tag">${w.topic||'—'}</span></div>`).join('')||'<div class="empty-state"><span class="emoji">📚</span><p>Keine Wörter</p></div>';
+  document.getElementById('wordCount').textContent=APP.words.length+' Wörter';
+  const topics=[...new Set(APP.words.map(w=>w.topic).filter(Boolean))];
+  document.getElementById('topicList').innerHTML=topics.map(t=>`<option value="${t}">`).join('');
 }
-
-function filterWords() { renderWordList(); }
-
-function showAddWord() { 
-  document.getElementById('newDe').value='';
-  document.getElementById('newEn').value='';
-  document.getElementById('newTopic').value='';
-  document.getElementById('newNote').value='';
-  document.getElementById('addWordModal').classList.add('show'); 
+function filterWords(){renderWordList()}
+function showAddWord(){['newDe','newEn','newTopic','newNote'].forEach(id=>document.getElementById(id).value='');document.getElementById('addWordModal').classList.add('show')}
+function saveWord(){
+  const de=document.getElementById('newDe').value.trim(),en=document.getElementById('newEn').value.trim();
+  if(!de||!en)return;
+  APP.words.push({id:'w'+Date.now(),de,en,topic:document.getElementById('newTopic').value.trim()||'Allgemein',note:document.getElementById('newNote').value.trim(),box:1,nextReview:new Date().toISOString().slice(0,10),seen:0});
+  saveData(APP);closeModal('addWordModal');renderWordList();
 }
-
-function saveWord() {
-  const de = document.getElementById('newDe').value.trim();
-  const en = document.getElementById('newEn').value.trim();
-  if (!de || !en) return;
-  const today = new Date().toISOString().slice(0,10);
-  APP.words.push({
-    id: 'w'+Date.now(),
-    de: de,
-    en: en,
-    topic: document.getElementById('newTopic').value.trim() || 'Allgemein',
-    note: document.getElementById('newNote').value.trim(),
-    box: 1,
-    nextReview: today,
-    seen: 0
-  });
-  saveData(APP);
-  closeModal('addWordModal');
-  renderWordList();
-}
-
-function editWord(id) {
-  const w = APP.words.find(x=>x.id===id);
-  if (!w) return;
-  const action = prompt(`${w.de} = ${w.en}\n\nBox ${w.box||1} | ${w.topic}\n\nLöschen? Tippe "delete"`);
-  if (action && action.toLowerCase()==='delete') {
-    APP.words = APP.words.filter(x=>x.id!==id);
-    saveData(APP);
-    renderWordList();
-  }
-}
+function editWord(id){const w=APP.words.find(x=>x.id===id);if(!w)return;if(confirm(`${w.de} = ${w.en}\nBox ${w.box||1} | ${w.topic}\n\nLöschen?`)){APP.words=APP.words.filter(x=>x.id!==id);saveData(APP);renderWordList()}}
 
 // ===== GRAMMATIK =====
-function renderGrammar() {
-  const html = APP.grammar.map(g => 
-    `<div class="card grammar-card">
-      <h4>${g.title}</h4>
-      <p style="white-space:pre-line;font-size:14px;line-height:1.7">${g.content}</p>
-    </div>`
+function renderGrammar(){document.getElementById('grammarList').innerHTML=APP.grammar.map(g=>`<div class="grammar-card"><h4>${g.title}</h4><p style="white-space:pre-line">${g.content}</p></div>`).join('')}
+
+// ===== SCHREIBEN =====
+function newPrompt(){const p=WRITING_PROMPTS[Math.floor(Math.random()*WRITING_PROMPTS.length)];document.getElementById('promptText').innerHTML=`<strong>[${p.type}]</strong> ${p.task}`;document.getElementById('writingInput').value='';document.getElementById('writingResult').style.display='none'}
+async function checkWriting(){
+  const text=document.getElementById('writingInput').value.trim();
+  if(!text)return alert('Bitte schreibe zuerst einen Text!');
+  const key=getApiKey();
+  if(!key){showApiKeyModal();return}
+  const r=document.getElementById('writingResult');r.style.display='block';r.innerHTML='<p style="color:var(--text2)">⏳ Wird geprüft...</p>';
+  try{
+    const res=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'gpt-4o-mini',messages:[{role:'system',content:'Du bist ein Deutschlehrer für B2-Niveau. Korrigiere den Text. Format:\n\n**Korrektur:**\n[Text]\n\n**Fehler:**\n- [Fehler]: [Erklärung]\n\n**B2-Tipps:**\n- [Besserer Ausdruck]\n\nSei freundlich aber genau.'},{role:'user',content:text}],temperature:0.3,max_tokens:800})});
+    if(!res.ok)throw new Error('API '+res.status);
+    const data=await res.json();r.innerHTML=data.choices[0].message.content.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>').replace(/- /g,'• ');
+    completeLessonStep(4);APP.stats.sessions++;saveData(APP);
+  }catch(e){r.innerHTML=`<p style="color:var(--error)">❌ ${e.message}</p><p style="font-size:13px;color:var(--text2);margin-top:8px">Prüfe deinen API Key.</p>`}
+}
+
+
+// ===== EXERCISES (Gap Fill + Grammar Drills) =====
+let currentExType='gap';
+let exQueue=[];
+let exIdx=0;
+let exCorrect=0;
+
+function startExercise(type) {
+  currentExType=type;
+  document.getElementById('exerciseArea').style.display='block';
+  document.getElementById('exerciseEmpty').style.display='none';
+  document.getElementById('exResult').style.display='none';
+  
+  if(type==='gap') {
+    document.getElementById('btnGapFill').className='btn btn-sm btn-primary';
+    document.getElementById('btnGrammarDrill').className='btn btn-sm btn-outline';
+    exQueue=[...GAP_SENTENCES].sort(()=>Math.random()-0.5).slice(0,10);
+  } else {
+    document.getElementById('btnGapFill').className='btn btn-sm btn-outline';
+    document.getElementById('btnGrammarDrill').className='btn btn-sm btn-primary';
+    exQueue=[...GRAMMAR_EXERCISES].sort(()=>Math.random()-0.5).slice(0,10);
+  }
+  exIdx=0; exCorrect=0;
+  showExercise();
+}
+
+function showExercise() {
+  if(exIdx>=exQueue.length) {
+    document.getElementById('exerciseArea').style.display='none';
+    document.getElementById('exerciseEmpty').style.display='block';
+    document.getElementById('exScore').textContent=exCorrect+' / '+exQueue.length+' richtig ('+Math.round(exCorrect/exQueue.length*100)+'%)';
+    if(currentExType==='gap') completeLessonStep(3);
+    else completeLessonStep(2);
+    return;
+  }
+  const ex=exQueue[exIdx];
+  if(currentExType==='gap') {
+    document.getElementById('exType').textContent='LÜCKENTEXT';
+    document.getElementById('exQuestion').textContent=ex.de;
+    document.getElementById('exHint').textContent='('+ex.en+')';
+  } else {
+    document.getElementById('exType').textContent='GRAMMATIK: '+getGrammarTitle(ex.rule);
+    document.getElementById('exQuestion').textContent=ex.q;
+    document.getElementById('exHint').textContent='';
+  }
+  const opts=[...ex.opts].sort(()=>Math.random()-0.5);
+  document.getElementById('exOptions').innerHTML=opts.map(o=>
+    `<div class="quiz-opt" onclick="checkExAnswer(this,'${o.replace(/'/g,"\\'")}','${(ex.answer||ex.word).replace(/'/g,"\\'")}')">${o}</div>`
   ).join('');
-  document.getElementById('grammarList').innerHTML = html;
+  document.getElementById('exProgress').textContent=(exIdx+1)+' / '+exQueue.length;
+  document.getElementById('exResult').style.display='none';
 }
 
-// ===== SCHREIBEN (AI Correction) =====
-function newPrompt() {
-  const p = WRITING_PROMPTS[Math.floor(Math.random()*WRITING_PROMPTS.length)];
-  document.getElementById('promptText').innerHTML = `<strong>[${p.type}]</strong> ${p.task}`;
-  document.getElementById('writingInput').value = '';
-  document.getElementById('writingResult').style.display = 'none';
-}
-
-async function checkWriting() {
-  const text = document.getElementById('writingInput').value.trim();
-  if (!text) return alert('Bitte schreibe zuerst einen Text!');
-  
-  const key = getApiKey();
-  if (!key) {
-    showApiKeyModal();
-    return alert('Bitte zuerst den OpenAI API Key eingeben.');
+function checkExAnswer(el, selected, correct) {
+  const opts=document.querySelectorAll('#exOptions .quiz-opt');
+  opts.forEach(o=>{
+    o.style.pointerEvents='none';
+    if(o.textContent===correct) o.classList.add('correct');
+  });
+  if(selected===correct) {
+    el.classList.add('correct');
+    exCorrect++;
+    document.getElementById('exResult').style.display='block';
+    document.getElementById('exResultTitle').textContent='✅ Richtig!';
+    document.getElementById('exResultTitle').style.color='var(--success)';
+    document.getElementById('exResultDetail').textContent='';
+  } else {
+    el.classList.add('wrong');
+    document.getElementById('exResult').style.display='block';
+    document.getElementById('exResultTitle').textContent='❌ Falsch';
+    document.getElementById('exResultTitle').style.color='var(--error)';
+    document.getElementById('exResultDetail').textContent='Richtige Antwort: '+correct;
   }
-  
-  const resultEl = document.getElementById('writingResult');
-  resultEl.style.display = 'block';
-  resultEl.innerHTML = '<p style="color:var(--text2)">⏳ Wird geprüft...</p>';
-  
-  try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+key },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [{
-          role: 'system',
-          content: 'Du bist ein Deutschlehrer für B2-Niveau. Korrigiere den folgenden Text. Antworte in diesem Format:\n\n**Korrektur:**\n[Korrigierter Text]\n\n**Fehler:**\n- [Fehler 1]: [Erklärung]\n- [Fehler 2]: [Erklärung]\n\n**B2-Tipps:**\n- [Vorschlag für besseren Ausdruck auf B2-Niveau]\n\nSei freundlich aber genau. Wenn der Text gut ist, lobe und gib Verbesserungsvorschläge für Stil.'
-        },{
-          role: 'user',
-          content: text
-        }],
-        temperature: 0.3,
-        max_tokens: 800
-      })
-    });
-    
-    if (!response.ok) {
-      throw new Error('API Fehler: ' + response.status);
-    }
-    
-    const data = await response.json();
-    const reply = data.choices[0].message.content;
-    resultEl.innerHTML = formatCorrection(reply);
-    completeLessonStep(4);
-    APP.stats.sessions++;
-    saveData(APP);
-  } catch(e) {
-    resultEl.innerHTML = `<p style="color:var(--error)">❌ Fehler: ${e.message}</p><p style="font-size:13px;color:var(--text2);margin-top:8px">Prüfe deinen API Key in den Einstellungen.</p>`;
-  }
+  APP.stats.total++; if(selected===correct) APP.stats.correct++; saveData(APP);
+  setTimeout(()=>{exIdx++;showExercise()},1500);
 }
 
-function formatCorrection(text) {
-  return text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n/g, '<br>')
-    .replace(/- /g, '• ');
+function getGrammarTitle(ruleId) {
+  const g=APP.grammar.find(x=>x.id===ruleId);
+  return g?g.title:ruleId;
 }
 
-// ===== FORTSCHRITT =====
-function renderStats() {
-  const mastered = APP.words.filter(w=>(w.box||1)>=5).length;
-  const accuracy = APP.stats.total > 0 ? Math.round(APP.stats.correct/APP.stats.total*100) : 0;
-  
-  document.getElementById('statsGrid').innerHTML = `
-    <div class="stat-card"><div class="num">${APP.words.length}</div><div class="lbl">Wörter</div></div>
-    <div class="stat-card"><div class="num">${mastered}</div><div class="lbl">Gemeistert ⭐</div></div>
-    <div class="stat-card"><div class="num">${accuracy}%</div><div class="lbl">Genauigkeit</div></div>
-    <div class="stat-card"><div class="num">${APP.stats.streak||0}</div><div class="lbl">Tage-Streak 🔥</div></div>
-  `;
+// ===== STATS =====
+function renderStats(){
+  const m=APP.words.filter(w=>(w.box||1)>=5).length;
+  const a=APP.stats.total>0?Math.round(APP.stats.correct/APP.stats.total*100):0;
+  document.getElementById('statsGrid').innerHTML=`<div class="stat-card"><div class="num">${APP.words.length}</div><div class="lbl">Wörter</div></div><div class="stat-card"><div class="num">${m}</div><div class="lbl">Gemeistert ⭐</div></div><div class="stat-card"><div class="num">${a}%</div><div class="lbl">Genauigkeit</div></div><div class="stat-card"><div class="num">${APP.stats.streak||0}</div><div class="lbl">Streak 🔥</div></div>`;
   renderLeitnerBoxes('statsLeitner');
-  
-  // Grammar progress
-  const html = APP.grammar.map(g => {
-    return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-      <span style="font-size:13px;flex:1">${g.title}</span>
-      <span class="tag grammar">B2</span>
-    </div>`;
-  }).join('');
-  document.getElementById('grammarProgress').innerHTML = html;
+  document.getElementById('grammarProgress').innerHTML=APP.grammar.map(g=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="font-size:13px;flex:1">${g.title}</span><span class="tag grammar">B2</span></div>`).join('');
+}
+function renderLeitnerBoxes(id){
+  const b=[0,0,0,0,0];APP.words.forEach(w=>{b[(w.box||1)-1]++});
+  const l=['Tägl.','2d','4d','7d','30d'];
+  document.getElementById(id).innerHTML=b.map((c,i)=>`<div class="leitner-box"><span class="box-count">${c}</span><span class="box-label">${l[i]}</span></div>`).join('');
 }
 
-function renderLeitnerBoxes(containerId) {
-  const boxes = [0,0,0,0,0];
-  APP.words.forEach(w => { boxes[(w.box||1)-1]++; });
-  const labels = ['Tägl.','2 Tage','4 Tage','Woche','Monat'];
-  document.getElementById(containerId).innerHTML = boxes.map((c,i) => 
-    `<div class="leitner-box"><span class="box-count">${c}</span>${labels[i]}</div>`
-  ).join('');
-}
+// ===== MODALS =====
+function showApiKeyModal(){document.getElementById('apiKeyInput').value=getApiKey();document.getElementById('apiKeyModal').classList.add('show')}
+function saveApiKey(){setApiKey(document.getElementById('apiKeyInput').value.trim());closeModal('apiKeyModal')}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
 
-// ===== SETTINGS / MODALS =====
-function showApiKeyModal() {
-  document.getElementById('apiKeyInput').value = getApiKey();
-  document.getElementById('apiKeyModal').classList.add('show');
-}
-function saveApiKey() {
-  setApiKey(document.getElementById('apiKeyInput').value.trim());
-  closeModal('apiKeyModal');
-}
-function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+// ===== IMPORT/EXPORT =====
+function exportData(){const b=new Blob([JSON.stringify(APP,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='deutsch_b2_backup.json';a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(d.words){APP={...DEFAULT_DATA,...d,stats:{...DEFAULT_DATA.stats,...d.stats}};saveData(APP);alert('✅ '+APP.words.length+' Wörter importiert!');initToday()}}catch(err){alert('❌ '+err.message)}};r.readAsText(f)}
 
-function exportData() {
-  const blob = new Blob([JSON.stringify(APP, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='deutsch_b2_backup.json'; a.click();
-  URL.revokeObjectURL(url);
-}
-
-function importData(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const imported = JSON.parse(e.target.result);
-      if (imported.words) {
-        APP = {...DEFAULT_DATA, ...imported, stats:{...DEFAULT_DATA.stats, ...imported.stats}};
-        saveData(APP);
-        alert('✅ Daten importiert! ' + APP.words.length + ' Wörter geladen.');
-        initToday();
-        renderWordList();
-      }
-    } catch(err) { alert('❌ Fehler beim Import: ' + err.message); }
-  };
-  reader.readAsText(file);
-}
-
-// ===== V7 DATA MIGRATION =====
-function migrateV7Data() {
-  try {
-    const oldData = localStorage.getItem('deutsch_data');
-    if (!oldData) return;
-    const old = JSON.parse(oldData);
-    if (old.words && old.words.length > 0 && APP.words.length === 0) {
-      const today = new Date().toISOString().slice(0,10);
-      APP.words = old.words.map(w => ({
-        id: w.id || 'w'+Date.now()+Math.random(),
-        de: w.de,
-        en: w.en || w.it || '',
-        topic: w.topic || 'Imported',
-        note: w.note || '',
-        box: Math.min(Math.max((w.score||0)+1, 1), 5),
-        nextReview: today,
-        seen: w.seen || 0
-      }));
-      if (old.grammar) {
-        old.grammar.forEach(g => {
-          if (!APP.grammar.find(x=>x.title===g.title)) {
-            APP.grammar.push({id:'imp_'+Date.now()+Math.random(), title:g.title, content:g.content});
-          }
-        });
-      }
-      APP.stats.sessions = old.stats?.sessions || 0;
-      APP.stats.correct = old.stats?.correct || 0;
-      APP.stats.total = old.stats?.total || 0;
-      saveData(APP);
-      console.log('Migrated', APP.words.length, 'words from v7');
-    }
-  } catch(e) { console.log('No v7 data to migrate'); }
-}
+// ===== V7 MIGRATION =====
+(function(){try{const old=localStorage.getItem('deutsch_data');if(!old)return;const o=JSON.parse(old);if(o.words&&o.words.length>0&&APP.words.length===0){const t=new Date().toISOString().slice(0,10);APP.words=o.words.map(w=>({id:w.id||'w'+Date.now()+Math.random(),de:w.de,en:w.en||w.it||'',topic:w.topic||'Imported',note:w.note||'',box:Math.min(Math.max((w.score||0)+1,1),5),nextReview:t,seen:w.seen||0}));if(o.grammar)o.grammar.forEach(g=>{if(!APP.grammar.find(x=>x.title===g.title))APP.grammar.push({id:'imp_'+Date.now(),title:g.title,content:g.content})});APP.stats.sessions=o.stats?.sessions||0;APP.stats.correct=o.stats?.correct||0;APP.stats.total=o.stats?.total||0;saveData(APP)}}catch(e){}})();
 
 // ===== INIT =====
-migrateV7Data();
 initToday();
-document.getElementById('streakDisplay').textContent = '🔥 ' + (APP.stats.streak||0) + ' Tage';
+document.getElementById('streakDisplay').textContent='🔥 '+(APP.stats.streak||0);
 
-// Service Worker registration for PWA (inline)
-if ('serviceWorker' in navigator) {
-  const swCode = `self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',e=>e.respondWith(fetch(e.request).catch(()=>caches.match(e.request))));`;
-  const swBlob = new Blob([swCode], {type:'application/javascript'});
-  const swUrl = URL.createObjectURL(swBlob);
-  navigator.serviceWorker.register(swUrl).catch(()=>{});
-}
+// PWA Service Worker
+if('serviceWorker'in navigator){const c=`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',e=>e.respondWith(fetch(e.request).catch(()=>caches.match(e.request))));`;navigator.serviceWorker.register(URL.createObjectURL(new Blob([c],{type:'application/javascript'}))).catch(()=>{})}
 </script>
 </body>
 </html>
