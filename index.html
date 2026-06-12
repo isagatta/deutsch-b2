@@ -442,7 +442,7 @@ const GAP_SENTENCES = [
   {de:"Die ___ schützt den Käufer zwei Jahre lang.",word:"Garantie",en:"warranty",opts:["Garantie","Gerechtigkeit","Gleichberechtigung","Gesellschaft"]},
   // Reisen
   {de:"Wegen der ___ habe ich meinen Anschlussflug verpasst.",word:"Verspätung",en:"delay",opts:["Verspätung","Verschmutzung","Versicherung","Vorsorge"]},
-  {de:"Ich fordere eine ___ für die Unannehmlichkeiten.",word:"Entschädigung",en:"compensation",opts:["Entschädigung","Entwicklung","Erfahrung","Ernährung"]}
+  {de:"Ich fordere eine ___ für die Unannehmlichkeiten.",word:"Entschädigung",en:"compensation",opts:["Entschädigung","Entwicklung","Erfahrung","Ernährung"]},
 
   // Lektion 10.06 - Migration
   {de:"Das Unternehmen möchte die Kosten deutlich ___.",word:"senken",en:"to reduce",opts:["senken","steigern","verfolgen","wahrnehmen"]},
@@ -675,13 +675,15 @@ function showExercise() {
     document.getElementById('exHint').textContent='';
   }
   const opts=[...ex.opts].sort(()=>Math.random()-0.5);
-  document.getElementById('exOptions').innerHTML=opts.map(o=>
-    `<div class="quiz-opt" onclick="checkExAnswer(this,'${o.replace(/'/g,"\\'")}','${(ex.answer||ex.word).replace(/'/g,"\\'")}')">${o}</div>`
-  ).join('');
+  document.getElementById('exOptions').innerHTML=opts.map(function(o){
+    var a = ex.answer || ex.word;
+    return '<div class="quiz-opt" onclick="exCheck(this)" data-v="' + o + '" data-a="' + a + '">' + o + '</div>';
+  }).join('');
   document.getElementById('exProgress').textContent=(exIdx+1)+' / '+exQueue.length;
   document.getElementById('exResult').style.display='none';
 }
 
+function exCheck(el){checkExAnswer(el,el.dataset.v,el.dataset.a);}
 function checkExAnswer(el, selected, correct) {
   const opts=document.querySelectorAll('#exOptions .quiz-opt');
   opts.forEach(o=>{
