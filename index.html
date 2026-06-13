@@ -205,7 +205,11 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;font-wei
 <div class="page" id="page-karten">
   <div class="section-header">
     <h2>Karten</h2>
-    <span class="due-badge" id="cardsDue">0</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn btn-sm btn-primary" id="btnDeEn" onclick="setCardDir('de-en')">DE→EN</button>
+      <button class="btn btn-sm btn-outline" id="btnEnDe" onclick="setCardDir('en-de')">EN→DE</button>
+      <span class="due-badge" id="cardsDue">0</span>
+    </div>
   </div>
   <div id="flashcardArea">
     <div class="flashcard-container" onclick="flipCard()">
@@ -240,8 +244,10 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;font-wei
   <div class="section-header">
     <h2>Übungen</h2>
     <div style="display:flex;gap:8px">
-      <button class="btn btn-sm btn-primary" id="btnGapFill" onclick="startExercise('gap')">Lückentext</button>
+      <button class="btn btn-sm btn-primary" id="btnGapFill" onclick="startExercise('gap')">Lücken</button>
       <button class="btn btn-sm btn-outline" id="btnGrammarDrill" onclick="startExercise('grammar')">Grammatik</button>
+      <button class="btn btn-sm btn-outline" id="btnVokabel" onclick="startVokabel()">Vokabel</button>
+      <button class="btn btn-sm btn-outline" id="btnSchreiben" onclick="showSchreiben()">Schreiben</button>
     </div>
   </div>
   <div id="exerciseArea">
@@ -263,12 +269,31 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;font-wei
     <p id="exScore"></p>
     <button class="btn btn-primary" style="margin-top:16px" onclick="startExercise(currentExType)">🔄 Nochmal</button>
   </div>
-</div>
 
-<!-- SCHREIBEN -->
-<div class="page" id="page-schreiben">
-  <div class="section-header"><h2>Schreiben</h2></div>
-  <div class="card">
+  
+  <div id="vokabelArea" style="display:none">
+    <div class="card">
+      <p style="font-size:11px;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">VOKABEL: Übersetze ins Deutsche</p>
+      <p style="font-size:22px;font-weight:700;margin-bottom:4px" id="vokEnWord"></p>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px" id="vokHint"></p>
+      <div class="form-group">
+        <input type="text" id="vokInput" placeholder="Auf Deutsch..." autocomplete="off" onkeydown="if(event.key==='Enter')checkVokabel()">
+      </div>
+      <button class="btn btn-primary btn-block" onclick="checkVokabel()">Prüfen</button>
+      <div id="vokResult" style="display:none;margin-top:14px;padding:14px;border-radius:12px;background:rgba(255,255,255,0.03)">
+        <p id="vokResultText" style="font-size:15px;line-height:1.6"></p>
+      </div>
+      <p style="text-align:center;color:var(--text2);font-size:13px;margin-top:14px" id="vokProgress"></p>
+    </div>
+    <div id="vokDone" style="display:none" class="empty-state">
+      <span class="emoji">✅</span>
+      <h3>Runde fertig!</h3>
+      <p id="vokScore"></p>
+      <button class="btn btn-primary" style="margin-top:16px" onclick="startVokabel()">🔄 Nochmal</button>
+    </div>
+  </div>
+  <div id="schreibenArea" style="display:none">
+    <div class="card">
     <div style="margin-bottom:18px">
       <p class="prompt-label">AUFGABE</p>
       <p class="prompt-text" id="promptText"></p>
@@ -280,6 +305,9 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;font-wei
     <div id="writingResult" class="writing-result" style="display:none"></div>
     <button class="btn btn-ghost btn-block" style="margin-top:12px" onclick="newPrompt()">🔄 Neue Aufgabe</button>
   </div>
+</div>
+  </div>
+
 </div>
 
 <!-- FORTSCHRITT -->
@@ -309,6 +337,19 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;font-wei
       <button class="btn btn-sm btn-outline" onclick="document.getElementById('importFile').click()">📤 Laden</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
     </div>
+    <div class="setting-row">
+      <span>GitHub Token</span>
+      <button class="btn btn-sm btn-outline" onclick="showGistTokenModal()">Setzen</button>
+    </div>
+    <div class="setting-row">
+      <span>Sync (Push)</span>
+      <button class="btn btn-sm btn-primary" onclick="gistPush()">⬆️ Upload</button>
+    </div>
+    <div class="setting-row">
+      <span>Sync (Pull)</span>
+      <button class="btn btn-sm btn-outline" onclick="gistPull()">⬇️ Download</button>
+    </div>
+    <p id="syncStatus" style="font-size:12px;color:var(--text2);margin-top:8px;text-align:center"></p>
   </div>
 </div>
 
@@ -351,6 +392,20 @@ label{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;font-wei
     <div class="action-btns">
       <button class="btn btn-outline" onclick="closeModal('apiKeyModal')">Abbrechen</button>
       <button class="btn btn-primary" onclick="saveApiKey()">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="gistTokenModal" onclick="if(event.target===this)closeModal('gistTokenModal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>GitHub Sync Token</h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Create a token at github.com/settings/tokens with "gist" scope only. Stored locally.</p>
+    <div class="form-group"><input id="gistTokenInput" type="password" placeholder="ghp_..."></div>
+    <div class="form-group"><label>Gist ID (leave empty for first sync)</label><input id="gistIdInput" placeholder="auto-created on first push"></div>
+    <div class="action-btns">
+      <button class="btn btn-outline" onclick="closeModal('gistTokenModal')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveGistToken()">Speichern</button>
     </div>
   </div>
 </div>
@@ -541,8 +596,7 @@ function switchPage(name,btn){
   if(name==='wortschatz')renderWordList();
   if(name==='grammatik')renderGrammar();
   if(name==='fortschritt')renderStats();
-  if(name==='schreiben'&&!document.getElementById('promptText').textContent)newPrompt();
-  if(name==='uebungen')startExercise('gap');
+    if(name==='uebungen')startExercise('gap');
 }
 
 // ===== HEUTE =====
@@ -566,11 +620,19 @@ function startLessonStep(n){
   const navBtns=document.querySelectorAll('.nav-btn');
   if(n===1){switchPage('karten',navBtns[3]);initFlashcards()}else if(n===3){switchPage('uebungen',navBtns[4]);startExercise('gap')}
   else if(n===2){switchPage('grammatik',navBtns[2])}
-  else if(n===4){switchPage('schreiben',navBtns[4]);newPrompt()}
+  else if(n===4){switchPage('uebungen',navBtns[4]);showSchreiben()}
 }
 function completeLessonStep(n){if(!APP.stats.lessonSteps)APP.stats.lessonSteps=[false,false,false,false];APP.stats.lessonSteps[n-1]=true;saveData(APP);updateLessonSteps();updateStreak()}
 
 // ===== FLASHCARDS =====
+
+var cardDirection = 'de-en';
+function setCardDir(dir) {
+  cardDirection = dir;
+  document.getElementById('btnDeEn').className = dir==='de-en' ? 'btn btn-sm btn-primary' : 'btn btn-sm btn-outline';
+  document.getElementById('btnEnDe').className = dir==='en-de' ? 'btn btn-sm btn-primary' : 'btn btn-sm btn-outline';
+  if(currentDue.length > 0) showCard();
+}
 let currentDue=[],cardIdx=0;
 function initFlashcards(){
   currentDue=getDueCards();cardIdx=0;
@@ -581,9 +643,14 @@ function initFlashcards(){
 function showCard(){
   if(cardIdx>=currentDue.length){document.getElementById('flashcardArea').style.display='none';document.getElementById('flashcardEmpty').style.display='block';completeLessonStep(1);return}
   const w=currentDue[cardIdx];
-  document.getElementById('fcFront').textContent=w.de;
+  if(cardDirection==='de-en'){
+    document.getElementById('fcFront').textContent=w.de;
+    document.getElementById('fcBack').textContent=w.en;
+  } else {
+    document.getElementById('fcFront').textContent=w.en;
+    document.getElementById('fcBack').textContent=w.de;
+  }
   document.getElementById('fcTopic').textContent=w.topic||'';
-  document.getElementById('fcBack').textContent=w.en;
   document.getElementById('fcBox').textContent='Box '+(w.box||1);
   document.getElementById('flashcard').classList.remove('flipped');
   document.getElementById('cardProgress').textContent=(cardIdx+1)+' / '+currentDue.length;
@@ -636,7 +703,87 @@ let exQueue=[];
 let exIdx=0;
 let exCorrect=0;
 
+
+// ===== VOKABEL (EN→DE typing) =====
+var vokQueue=[], vokIdx=0, vokCorrect=0;
+
+function startVokabel() {
+  document.getElementById('btnGapFill').className='btn btn-sm btn-outline';
+  document.getElementById('btnGrammarDrill').className='btn btn-sm btn-outline';
+  document.getElementById('btnVokabel').className='btn btn-sm btn-primary';
+  document.getElementById('btnSchreiben').className='btn btn-sm btn-outline';
+  document.getElementById('exerciseArea').style.display='none';
+  document.getElementById('exerciseEmpty').style.display='none';
+  document.getElementById('schreibenArea').style.display='none';
+  document.getElementById('vokabelArea').style.display='block';
+  document.getElementById('vokDone').style.display='none';
+  
+  // Pick 10 random words from due cards (or all if less)
+  var due = getDueCards();
+  var pool = due.length >= 10 ? due : APP.words;
+  vokQueue = pool.slice().sort(function(){return Math.random()-0.5}).slice(0,10);
+  vokIdx = 0; vokCorrect = 0;
+  showVokabel();
+}
+
+function showVokabel() {
+  if(vokIdx >= vokQueue.length) {
+    document.getElementById('vokabelArea').querySelector('.card').style.display='none';
+    document.getElementById('vokDone').style.display='block';
+    document.getElementById('vokScore').textContent = vokCorrect + ' / ' + vokQueue.length + ' richtig (' + Math.round(vokCorrect/vokQueue.length*100) + '%)';
+    return;
+  }
+  document.getElementById('vokabelArea').querySelector('.card').style.display='block';
+  document.getElementById('vokDone').style.display='none';
+  var w = vokQueue[vokIdx];
+  document.getElementById('vokEnWord').textContent = w.en;
+  document.getElementById('vokHint').textContent = w.topic ? '(' + w.topic + ')' : '';
+  document.getElementById('vokInput').value = '';
+  document.getElementById('vokResult').style.display = 'none';
+  document.getElementById('vokProgress').textContent = (vokIdx+1) + ' / ' + vokQueue.length;
+  document.getElementById('vokInput').focus();
+}
+
+function checkVokabel() {
+  var input = document.getElementById('vokInput').value.trim().toLowerCase();
+  if(!input) return;
+  var w = vokQueue[vokIdx];
+  var correct = w.de.toLowerCase();
+  // Also accept without article for nouns
+  var correctNoArticle = correct.replace(/^(der|die|das|ein|eine)\s+/i, '');
+  var isCorrect = (input === correct || input === correctNoArticle || correct.includes(input));
+  
+  var resultEl = document.getElementById('vokResult');
+  resultEl.style.display = 'block';
+  
+  if(isCorrect) {
+    vokCorrect++;
+    resultEl.innerHTML = '<p style="color:var(--success);font-weight:700">✅ Richtig!</p><p style="color:var(--text2)">' + w.de + '</p>';
+  } else {
+    resultEl.innerHTML = '<p style="color:var(--error);font-weight:700">❌ Falsch</p><p style="font-size:15px;margin-top:4px">Deine Antwort: <span style="text-decoration:line-through">' + document.getElementById('vokInput').value + '</span></p><p style="font-size:15px;margin-top:4px">Richtig: <strong>' + w.de + '</strong></p>' + (w.note ? '<p style="font-size:13px;color:var(--text2);margin-top:4px">💡 ' + w.note + '</p>' : '');
+  }
+  
+  APP.stats.total++; if(isCorrect) APP.stats.correct++; saveData(APP);
+  setTimeout(function(){vokIdx++;showVokabel();}, isCorrect ? 1200 : 3000);
+}
+
+
+function showSchreiben() {
+  document.getElementById('btnGapFill').className='btn btn-sm btn-outline';
+  document.getElementById('btnGrammarDrill').className='btn btn-sm btn-outline';
+  document.getElementById('btnSchreiben').className='btn btn-sm btn-primary';
+  document.getElementById('exerciseArea').style.display='none';
+  document.getElementById('exerciseEmpty').style.display='none';
+  document.getElementById('vokabelArea').style.display='none';
+  document.getElementById('btnVokabel').className='btn btn-sm btn-outline';
+  document.getElementById('schreibenArea').style.display='block';
+  if(!document.getElementById('promptText').textContent) newPrompt();
+}
 function startExercise(type) {
+  document.getElementById('schreibenArea').style.display='none';
+  document.getElementById('vokabelArea').style.display='none';
+  document.getElementById('btnSchreiben').className='btn btn-sm btn-outline';
+  document.getElementById('btnVokabel').className='btn btn-sm btn-outline';
   currentExType=type;
   document.getElementById('exerciseArea').style.display='block';
   document.getElementById('exerciseEmpty').style.display='none';
@@ -705,7 +852,7 @@ function checkExAnswer(el, selected, correct) {
     document.getElementById('exResultDetail').textContent='Richtige Antwort: '+correct;
   }
   APP.stats.total++; if(selected===correct) APP.stats.correct++; saveData(APP);
-  setTimeout(()=>{exIdx++;showExercise()},1500);
+  setTimeout(()=>{exIdx++;showExercise()}, currentExType==="grammar" && !el.classList.contains("correct") ? 4000 : 1500);
 }
 
 function getGrammarTitle(ruleId) {
@@ -738,6 +885,107 @@ function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileRe
 
 // ===== V7 MIGRATION =====
 (function(){try{const old=localStorage.getItem('deutsch_data');if(!old)return;const o=JSON.parse(old);if(o.words&&o.words.length>0&&APP.words.length===0){const t=new Date().toISOString().slice(0,10);APP.words=o.words.map(w=>({id:w.id||'w'+Date.now()+Math.random(),de:w.de,en:w.en||w.it||'',topic:w.topic||'Imported',note:w.note||'',box:Math.min(Math.max((w.score||0)+1,1),5),nextReview:t,seen:w.seen||0}));if(o.grammar)o.grammar.forEach(g=>{if(!APP.grammar.find(x=>x.title===g.title))APP.grammar.push({id:'imp_'+Date.now(),title:g.title,content:g.content})});APP.stats.sessions=o.stats?.sessions||0;APP.stats.correct=o.stats?.correct||0;APP.stats.total=o.stats?.total||0;saveData(APP)}}catch(e){}})();
+
+
+// ===== GITHUB GIST SYNC =====
+const GIST_TOKEN_KEY = 'deutsch_b2_gist_token';
+const GIST_ID_KEY = 'deutsch_b2_gist_id';
+
+function getGistToken() { return localStorage.getItem(GIST_TOKEN_KEY) || ''; }
+function getGistId() { return localStorage.getItem(GIST_ID_KEY) || ''; }
+function setGistToken(t) { localStorage.setItem(GIST_TOKEN_KEY, t); }
+function setGistId(id) { localStorage.setItem(GIST_ID_KEY, id); }
+
+function showGistTokenModal() {
+  document.getElementById('gistTokenInput').value = getGistToken();
+  document.getElementById('gistIdInput').value = getGistId();
+  document.getElementById('gistTokenModal').classList.add('show');
+}
+function saveGistToken() {
+  setGistToken(document.getElementById('gistTokenInput').value.trim());
+  var gid = document.getElementById('gistIdInput').value.trim();
+  if (gid) setGistId(gid);
+  closeModal('gistTokenModal');
+}
+
+async function gistPush() {
+  var token = getGistToken();
+  if (!token) { showGistTokenModal(); return; }
+  var status = document.getElementById('syncStatus');
+  status.textContent = '⏳ Pushing...';
+  
+  // Build sync payload (progress only, not words — those are in HTML)
+  var payload = {
+    stats: APP.stats,
+    wordProgress: APP.words.map(function(w) { return {id:w.id, box:w.box||1, nextReview:w.nextReview, seen:w.seen||0}; }),
+    syncedAt: new Date().toISOString()
+  };
+  
+  var gistId = getGistId();
+  var url = gistId ? 'https://api.github.com/gists/' + gistId : 'https://api.github.com/gists';
+  var method = gistId ? 'PATCH' : 'POST';
+  
+  try {
+    var res = await fetch(url, {
+      method: method,
+      headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        description: 'Deutsch B2 — Progress Sync',
+        public: false,
+        files: { 'deutsch_b2_progress.json': { content: JSON.stringify(payload, null, 2) } }
+      })
+    });
+    if (!res.ok) throw new Error('GitHub ' + res.status);
+    var data = await res.json();
+    if (!gistId) { setGistId(data.id); }
+    status.textContent = '✅ Pushed! ' + new Date().toLocaleTimeString();
+  } catch(e) {
+    status.textContent = '❌ ' + e.message;
+  }
+}
+
+async function gistPull() {
+  var token = getGistToken();
+  var gistId = getGistId();
+  if (!token || !gistId) { showGistTokenModal(); return; }
+  var status = document.getElementById('syncStatus');
+  status.textContent = '⏳ Pulling...';
+  
+  try {
+    var res = await fetch('https://api.github.com/gists/' + gistId, {
+      headers: { 'Authorization': 'token ' + token }
+    });
+    if (!res.ok) throw new Error('GitHub ' + res.status);
+    var data = await res.json();
+    var content = JSON.parse(data.files['deutsch_b2_progress.json'].content);
+    
+    // Merge progress into current words
+    var progressMap = {};
+    content.wordProgress.forEach(function(p) { progressMap[p.id] = p; });
+    APP.words.forEach(function(w) {
+      if (progressMap[w.id]) {
+        w.box = progressMap[w.id].box;
+        w.nextReview = progressMap[w.id].nextReview;
+        w.seen = progressMap[w.id].seen;
+      }
+    });
+    // Merge stats (take the higher values)
+    APP.stats.streak = Math.max(APP.stats.streak || 0, content.stats.streak || 0);
+    APP.stats.correct = Math.max(APP.stats.correct || 0, content.stats.correct || 0);
+    APP.stats.total = Math.max(APP.stats.total || 0, content.stats.total || 0);
+    APP.stats.sessions = Math.max(APP.stats.sessions || 0, content.stats.sessions || 0);
+    if (content.stats.lastDate > (APP.stats.lastDate || '')) {
+      APP.stats.lastDate = content.stats.lastDate;
+    }
+    
+    saveData(APP);
+    status.textContent = '✅ Pulled! Synced from ' + content.syncedAt.slice(0,16).replace('T',' ');
+    initToday();
+    document.getElementById('streakDisplay').textContent = '🔥 ' + (APP.stats.streak||0);
+  } catch(e) {
+    status.textContent = '❌ ' + e.message;
+  }
+}
 
 // ===== INIT =====
 initToday();
