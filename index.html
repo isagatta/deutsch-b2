@@ -635,7 +635,12 @@ function setCardDir(dir) {
 }
 let currentDue=[],cardIdx=0;
 function initFlashcards(){
-  currentDue=getDueCards();cardIdx=0;
+  currentDue=getDueCards();
+  // Limit to 20 random cards per session
+  if(currentDue.length > 20) {
+    currentDue = currentDue.sort(function(){return Math.random()-0.5}).slice(0,20);
+  }
+  cardIdx=0;
   document.getElementById('cardsDue').textContent=currentDue.length;
   if(currentDue.length===0){document.getElementById('flashcardArea').style.display='none';document.getElementById('flashcardEmpty').style.display='block'}
   else{document.getElementById('flashcardArea').style.display='block';document.getElementById('flashcardEmpty').style.display='none';showCard()}
